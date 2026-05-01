@@ -1,0 +1,102 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { copy, languages, site, type Lang } from "../../data/site";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = copy[lang];
+---
+
+<BaseLayout lang={lang} title={`${t.contactTitle} | ${site.brand[lang]}`} description={t.contactIntro}>
+  <section class="section">
+    <div class="eyebrow">{t.social}</div>
+    <h1>{t.contactTitle}</h1>
+    <p class="lead">{t.contactIntro}</p>
+
+    <div class="contact-grid">
+      <a href={`mailto:${site.email}`}>
+        <span>Email</span>
+        {site.email}
+      </a>
+      <a href={site.instagram} target="_blank" rel="noreferrer">
+        <span>Instagram</span>
+        @vanfwd
+      </a>
+      <a href={site.xiaohongshu} target="_blank" rel="noreferrer">
+        <span>小红书</span>
+        Stage 4th Society
+      </a>
+      <div>
+        <span>WeChat</span>
+        {site.wechatId}
+      </div>
+    </div>
+
+    <div class="qr-block">
+      <div>
+        <div class="eyebrow">Xiaohongshu</div>
+        <h2>小红书 QR</h2>
+      </div>
+      <img src={site.xhsQr} alt="Xiaohongshu QR code" />
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .contact-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    margin-top: 44px;
+  }
+
+  .contact-grid a,
+  .contact-grid div {
+    border-top: 1px solid var(--line);
+    font-size: clamp(18px, 2.4vw, 26px);
+    font-weight: 760;
+    overflow-wrap: anywhere;
+    padding-top: 16px;
+  }
+
+  .contact-grid span {
+    color: var(--muted);
+    display: block;
+    font-size: 13px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .qr-block {
+    align-items: end;
+    border-top: 1px solid var(--line);
+    display: flex;
+    gap: 28px;
+    justify-content: space-between;
+    margin-top: 60px;
+    padding-top: 28px;
+  }
+
+  .qr-block img {
+    background: white;
+    border: 1px solid var(--line);
+    height: 220px;
+    object-fit: contain;
+    padding: 12px;
+    width: 220px;
+  }
+
+  @media (max-width: 760px) {
+    .contact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .qr-block {
+      align-items: start;
+      flex-direction: column;
+    }
+  }
+</style>

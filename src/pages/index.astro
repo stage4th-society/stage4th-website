@@ -1,0 +1,29 @@
+---
+import { site } from "../data/site";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stage 4th Society 第四面墙拆除队</title>
+    <meta
+      name="description"
+      content="Stage 4th Society is a Vancouver-based non-profit theatre organization."
+    />
+    <link rel="canonical" href={site.url} />
+    <script is:inline>
+      const savedLang = window.localStorage.getItem("stage4th-lang");
+      const browserLang = navigator.language || "";
+      const nextLang = savedLang || (browserLang.toLowerCase().startsWith("zh") ? "zh" : "en");
+      window.location.replace(`/${nextLang}`);
+    </script>
+  </head>
+  <body>
+    <main>
+      <h1>Stage 4th Society 第四面墙拆除队</h1>
+      <p><a href="/en">English</a> / <a href="/zh">中文</a></p>
+    </main>
+  </body>
+</html>

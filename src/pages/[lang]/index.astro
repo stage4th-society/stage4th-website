@@ -1,0 +1,60 @@
+---
+import { getCollection } from "astro:content";
+import EventCard from "../../components/EventCard.astro";
+import { eventSlug } from "../../data/events";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { copy, languages, site, type Lang } from "../../data/site";
+
+export function getStaticPaths() {
+  return languages.map((lang) => ({ params: { lang } }));
+}
+
+const lang = Astro.params.lang as Lang;
+const t = copy[lang];
+const events = await getCollection("events");
+const proof = events.find((event) => eventSlug(event) === "proof-2026-04-26") ?? events[0];
+const proofSlug = eventSlug(proof);
+const title = `${site.brand[lang]} | ${t.homeTitle}`;
+---
+
+<BaseLayout lang={lang} title={title} description={t.homeIntro}>
+  <section class="section hero">
+    <div class="eyebrow">{t.homeEyebrow}</div>
+    <h1>{t.homeTitle}</h1>
+    <p class="lead">{t.homeIntro}</p>
+    <div class="button-row">
+      <a class="button" href={`/${lang}/events`}>{t.eventsCta}</a>
+      <a class="button secondary" href={`/${lang}/about`}>{t.aboutCta}</a>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="split">
+      <div>
+        <div class="eyebrow">{t.featured}</div>
+        <h2>{lang === "zh" ? proof.data.titleZh : proof.data.titleEn}</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <span>{t.eventDetails}</span>
+            {proof.data.dateTime}
+          </div>
+          <div class="info-item">
+            <span>{t.organizer}</span>
+            Stage 4th Society
+          </div>
+        </div>
+        <div class="button-row">
+          <a class="button" href={`/${lang}/events/${proofSlug}`}>{t.viewProgram}</a>
+          <a class="button secondary" href={`/${lang}/contact`}>{t.followCta}</a>
+        </div>
+      </div>
+      <a class="feature-image" href={`/${lang}/events/${proofSlug}`}>
+        <img src={proof.data.bannerImage} alt={lang === "zh" ? proof.data.titleZh : proof.data.titleEn} />
+      </a>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <EventCard event={proof} lang={lang} />
+  </section>
+</BaseLayout>

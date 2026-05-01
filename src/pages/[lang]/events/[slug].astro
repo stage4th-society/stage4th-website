@@ -1,0 +1,208 @@
+---
+import { getCollection } from "astro:content";
+import { eventSlug } from "../../../data/events";
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { copy, languages, site, type Lang } from "../../../data/site";
+
+export async function getStaticPaths() {
+  const events = await getCollection("events");
+  return languages.flatMap((lang) =>
+    events.map((event) => ({
+      params: { lang, slug: eventSlug(event) },
+      props: { event },
+    })),
+  );
+}
+
+const { event } = Astro.props;
+const lang = Astro.params.lang as Lang;
+const t = copy[lang];
+const data = event.data;
+const title = lang === "zh" ? data.titleZh : data.titleEn;
+const subtitle = lang === "zh" ? data.subtitleZh : data.subtitleEn;
+const description = lang === "zh" ? data.descriptionZh : data.descriptionEn;
+const playwright = lang === "zh" ? data.playwrightZh : data.playwrightEn;
+const seoTitle = lang === "zh" ? data.seoTitleZh : data.seoTitleEn;
+const seoDescription = lang === "zh" ? data.seoDescriptionZh : data.seoDescriptionEn;
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TheaterEvent",
+  name: title,
+  startDate: "2026-04-26T19:00:00-07:00",
+  eventStatus: "https://schema.org/EventCompleted",
+  eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
+  location: {
+    "@type": "Place",
+    name: data.venue.name,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: data.venue.address,
+      addressLocality: "Vancouver",
+      addressRegion: "BC",
+      postalCode: "V6H 3S2",
+      addressCountry: "CA",
+    },
+  },
+  image: new URL(data.bannerImage, site.url).toString(),
+  organizer: {
+    "@type": "Organization",
+    name: "Stage 4th Society",
+    url: site.url,
+  },
+  description: seoDescription,
+};
+---
+
+<BaseLayout lang={lang} title={seoTitle} description={seoDescription} image={data.bannerImage}>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <section class="event-hero">
+    <img src={data.bannerImage} alt={title} />
+  </section>
+
+  <section class="section event-title">
+    <div class="eyebrow">{t.past}</div>
+    <h1>{title}</h1>
+    <p class="lead">{subtitle}</p>
+    <div class="button-row">
+      <a class="button" href="#program">{t.viewProgram}</a>
+      <a class="button secondary" href={`/${lang}/contact`}>{t.followCta}</a>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="info-grid event-info">
+      <div class="info-item">
+        <span>{t.organizer}</span>
+        Stage 4th Society（第四面墙拆除队）
+      </div>
+      <div class="info-item">
+        <span>{t.eventDetails}</span>
+        {data.dateTime}
+      </div>
+      <div class="info-item">
+        <span>{data.venue.name}</span>
+        {data.venue.address}, {data.venue.city}
+      </div>
+      <div class="info-item">
+        <span>Language</span>
+        {lang === "zh" ? data.language.zh : data.language.en}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="split poster-split">
+      <div class="poster-frame">
+        <img src={data.posterImage} alt={`${title} poster`} />
+      </div>
+      <div>
+        <div class="eyebrow">{t.aboutPlay}</div>
+        <h2>{title}</h2>
+        <div class="body-copy event-copy">
+          {description.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-tight">
+    <div class="split">
+      <div>
+        <div class="eyebrow">David Auburn</div>
+        <h2>{t.aboutPlaywright}</h2>
+      </div>
+      <div class="body-copy">
+        <p>{playwright}</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="program" class="section section-tight">
+    <div class="eyebrow">{t.program}</div>
+    <h2>{t.viewProgram}</h2>
+    <div class="program-list">
+      {data.programFiles.map((file) => <a href={file.url} target="_blank">{file.label}</a>)}
+    </div>
+  </section>
+
+  <section class="section section-tight awards">
+    {data.awards.map((award) => <span>{award}</span>)}
+  </section>
+</BaseLayout>
+
+<style>
+  .event-hero {
+    background: var(--ink);
+  }
+
+  .event-hero img {
+    aspect-ratio: 16 / 7;
+    margin: 0 auto;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .event-title {
+    padding-bottom: 28px;
+  }
+
+  .event-info {
+    margin-top: 0;
+  }
+
+  .poster-split {
+    align-items: start;
+    grid-template-columns: minmax(260px, 0.55fr) minmax(0, 1fr);
+  }
+
+  .poster-frame {
+    background: white;
+    border: 1px solid var(--line);
+    padding: 10px;
+  }
+
+  .event-copy {
+    margin-top: 24px;
+  }
+
+  .program-list {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 28px;
+  }
+
+  .program-list a {
+    border: 1px solid var(--line);
+    font-weight: 850;
+    padding: 18px;
+  }
+
+  .program-list a:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .awards {
+    border-top: 1px solid var(--line);
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 15px;
+    gap: 18px;
+    justify-content: center;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 760px) {
+    .event-hero img {
+      aspect-ratio: 4 / 3;
+    }
+
+    .program-list {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
