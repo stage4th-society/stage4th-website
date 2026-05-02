@@ -3,7 +3,7 @@ export type Lang = "zh" | "en";
 export const languages: Lang[] = ["zh", "en"];
 
 export const site = {
-  url: "https://stage4th-society.pages.dev",
+  url: "https://stage4th-website.vancouver-fwd.workers.dev",
   email: "vancouver.fwd@gmail.com",
   instagram: "https://www.instagram.com/vanfwd?igsh=Nmo0YnltZXl2M2xq",
   xiaohongshu: "http://xhslink.com/m/7VOFBgRY4ym",

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://stage4th-society.pages.dev/sitemap-index.xml
+Sitemap: https://stage4th-website.vancouver-fwd.workers.dev/sitemap-index.xml
