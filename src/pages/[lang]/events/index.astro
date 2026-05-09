@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import EventCard from "../../../components/EventCard.astro";
+import { eventSlug } from "../../../data/events";
 import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { copy, languages, site, type Lang } from "../../../data/site";
+import { copy, languages, siteEvents, site, type Lang } from "../../../data/site";
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
@@ -10,24 +10,113 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = copy[lang];
+const e = siteEvents[lang];
 const events = await getCollection("events");
+const past = events.filter((ev) => ev.data.status === "past" || ev.data.status === "cancelled");
+const upcoming = events.filter((ev) => ev.data.status === "upcoming" || ev.data.status === "active");
 ---
-
-<BaseLayout lang={lang} title={`${t.eventsTitle} | ${site.brand[lang]}`} description={t.eventsIntro}>
-  <section class="section">
-    <div class="eyebrow">{site.shortBrand[lang]}</div>
-    <h1>{t.eventsTitle}</h1>
-    <p class="lead">{t.eventsIntro}</p>
+<BaseLayout lang={lang} title={`${t.eventsTitle} | ${site.brand[lang].primary}`} description={t.eventsIntro}>
+  <section class="head">
+    <div class="wrap">
+      <span class="eyebrow">{e.eyebrow}</span>
+      <h1 class="display">{e.titleLead} <em>{e.titleEm}</em></h1>
+      <p class="lead">{e.lead}</p>
+    </div>
   </section>
 
-  <section class="section section-tight events-list">
-    {events.map((event) => <EventCard event={event} lang={lang} />)}
+  <section class="list-section">
+    <div class="wrap">
+      <div class="section-label">
+        <span class="eyebrow">{e.sectionUpcoming}</span>
+        <span class="count">[{String(upcoming.length).padStart(2, "0")}]</span>
+      </div>
+      {upcoming.length === 0 ? (
+        <div class="empty">{e.empty}</div>
+      ) : (
+        <ol class="rows">
+          {upcoming.map((ev, i) => {
+            const slug = eventSlug(ev);
+            const title = lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
+            return (
+              <li>
+                <a class="row" href={`/${lang}/events/${slug}`}>
+                  <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
+                  <span class="title"><em>{title}</em></span>
+                  <span class="meta">{ev.data.dateTime}</span>
+                  <span class="status">{t.upcoming}</span>
+                  <span class="arr">→</span>
+                </a>
+              </li>
+            );
+          })}
+        </ol>
+      )}
+    </div>
+  </section>
+
+  <section class="list-section">
+    <div class="wrap">
+      <div class="section-label">
+        <span class="eyebrow">{e.sectionPast}</span>
+        <span class="count">[{String(past.length).padStart(2, "0")}]</span>
+      </div>
+      <ol class="rows">
+        {past.map((ev, i) => {
+          const slug = eventSlug(ev);
+          const title = lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
+          return (
+            <li>
+              <a class="row" href={`/${lang}/events/${slug}`}>
+                <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
+                <span class="title"><em>{title}</em></span>
+                <span class="meta">{ev.data.dateTime}</span>
+                <span class="status muted">{t.past}</span>
+                <span class="arr">→</span>
+              </a>
+            </li>
+          );
+        })}
+      </ol>
+    </div>
   </section>
 </BaseLayout>
 
 <style>
-  .events-list {
+  .head { padding: 80px 0 60px; border-bottom: 1px solid var(--line); }
+  .head .eyebrow { margin-bottom: 24px; }
+  h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 32px; }
+  h1.display em { font-style: italic; color: var(--ink-soft); }
+  .lead { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; }
+
+  .list-section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .section-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; }
+  .section-label .count { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+
+  .rows { list-style: none; }
+  .row {
     display: grid;
-    gap: 52px;
+    grid-template-columns: 80px 1fr 220px 100px 32px;
+    gap: 32px; align-items: center;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    font-family: var(--serif);
+    transition: padding .25s, color .25s;
+  }
+  .rows li:last-child .row { border-bottom: 1px solid var(--line); }
+  .row:hover { padding-left: 12px; }
+  .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); }
+  .title { font-size: clamp(22px, 2.6vw, 36px); font-weight: 500; }
+  .title em { font-style: italic; }
+  .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+  .status { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-deep); justify-self: end; }
+  .status.muted { color: var(--muted); }
+  .arr { font-size: 18px; color: var(--ink-soft); transition: transform .2s; justify-self: end; }
+  .row:hover .arr { transform: translateX(6px); color: var(--accent-deep); }
+
+  .empty { padding: 48px 0; text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--muted); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+  @media (max-width: 760px) {
+    .row { grid-template-columns: 50px 1fr; }
+    .meta, .status, .arr { display: none; }
   }
 </style>

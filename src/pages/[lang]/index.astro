@@ -1,9 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import EventCard from "../../components/EventCard.astro";
 import { eventSlug } from "../../data/events";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { copy, languages, site, type Lang } from "../../data/site";
+import { copy, languages, siteHero, siteFeatured, siteAbout, site, type Lang } from "../../data/site";
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
@@ -11,50 +10,135 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = copy[lang];
+const hero = siteHero[lang];
+const featured = siteFeatured[lang];
+const about = siteAbout[lang];
 const events = await getCollection("events");
-const proof = events.find((event) => eventSlug(event) === "proof-2026-04-26") ?? events[0];
+const proof = events.find((e) => eventSlug(e) === "proof-2026-04-26") ?? events[0];
 const proofSlug = eventSlug(proof);
-const title = `${site.brand[lang]} | ${t.homeTitle}`;
+const proofTitle = lang === "zh" ? proof.data.titleZh : proof.data.titleEn;
+const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 ---
-
 <BaseLayout lang={lang} title={title} description={t.homeIntro}>
-  <section class="section hero">
-    <div class="eyebrow">{t.homeEyebrow}</div>
-    <h1>{t.homeTitle}</h1>
-    <p class="lead">{t.homeIntro}</p>
-    <div class="button-row">
-      <a class="button" href={`/${lang}/events`}>{t.eventsCta}</a>
-      <a class="button secondary" href={`/${lang}/about`}>{t.aboutCta}</a>
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap">
+      <ul class="meta">
+        {hero.meta.map(([k, v]) => (
+          <li><span class="k">{k}</span><span class="v">{v}</span></li>
+        ))}
+      </ul>
+      <h1 class="display">
+        {hero.title.map((line, i) => (
+          <span class={`l l${i + 1}`}>
+            {i === 1 ? <em>{line}</em> : i === hero.title.length - 1
+              ? <><span class="accent-word">{String(line).replace(/[.。]$/, "")}</span>{String(line).match(/[.。]$/)?.[0] ?? ""}</>
+              : line}
+          </span>
+        ))}
+      </h1>
+      <div class="lead-row">
+        <p class="lead">{hero.lead}</p>
+        <span class="cue">{hero.scrollCue}</span>
+      </div>
     </div>
   </section>
 
-  <section class="section section-tight">
-    <div class="split">
-      <div>
-        <div class="eyebrow">{t.featured}</div>
-        <h2>{lang === "zh" ? proof.data.titleZh : proof.data.titleEn}</h2>
-        <div class="info-grid">
-          <div class="info-item">
-            <span>{t.eventDetails}</span>
-            {proof.data.dateTime}
+  <!-- FEATURED -->
+  <section class="featured">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">{featured.eyebrow}</span>
+        <h2 class="display"><em>{proofTitle}</em></h2>
+      </div>
+      <div class="grid">
+        <a class="poster" href={`/${lang}/events/${proofSlug}`}>
+          <img src={proof.data.posterImage} alt={proofTitle} />
+          <span class="tape">{featured.tape}</span>
+        </a>
+        <div class="info">
+          {featured.info.map(([k, v, sub]) => (
+            <div class="row">
+              <span class="k">{k}</span>
+              <div class="v">
+                <strong>{v}</strong>
+                <span class="sub">{sub}</span>
+              </div>
+            </div>
+          ))}
+          <div class="cta-row">
+            <a class="btn" href={`/${lang}/events/${proofSlug}`}>{featured.cta} <span class="arr">→</span></a>
+            <a class="btn secondary" href={`/${lang}/events`}>{featured.ctaSecondary}</a>
           </div>
-          <div class="info-item">
-            <span>{t.organizer}</span>
-            Stage 4th Society
-          </div>
-        </div>
-        <div class="button-row">
-          <a class="button" href={`/${lang}/events/${proofSlug}`}>{t.viewProgram}</a>
-          <a class="button secondary" href={`/${lang}/contact`}>{t.followCta}</a>
         </div>
       </div>
-      <a class="feature-image" href={`/${lang}/events/${proofSlug}`}>
-        <img src={proof.data.bannerImage} alt={lang === "zh" ? proof.data.titleZh : proof.data.titleEn} />
-      </a>
     </div>
   </section>
 
-  <section class="section section-tight">
-    <EventCard event={proof} lang={lang} />
+  <!-- ABOUT PREVIEW -->
+  <section class="about">
+    <div class="wrap">
+      <span class="eyebrow">About — 关于</span>
+      <p class="pull">
+        {about.pull.lead}<br/>
+        {about.pull.body}<em class="accent-word">{about.pull.accent}</em>{about.pull.tail}
+      </p>
+      <div class="pillars">
+        {about.pillars.map((p) => (
+          <article>
+            <span class="n">{p.n}</span>
+            <h3>{p.h}</h3>
+            <p>{p.p}</p>
+          </article>
+        ))}
+      </div>
+      <a class="btn secondary" href={`/${lang}/about`}>{t.aboutCta} <span class="arr">→</span></a>
+    </div>
   </section>
 </BaseLayout>
+
+<style>
+  .hero { padding: 80px 0 120px; border-bottom: 1px solid var(--line); }
+  .meta { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-bottom: 40px; border-bottom: 1px solid var(--line); margin-bottom: 64px; }
+  .meta li { display: flex; flex-direction: column; gap: 6px; }
+  .meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .meta .v { font-family: var(--serif); font-size: 22px; }
+  h1.display .l { display: block; }
+  h1.display .l2 { padding-left: 8vw; font-style: italic; color: var(--ink-soft); }
+  h1.display .l4 { padding-left: 4vw; }
+  h1.display em { font-style: italic; }
+  .lead-row { display: grid; grid-template-columns: 2fr 1fr; gap: 80px; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--line); align-items: end; }
+  .lead { font-size: 16px; line-height: 1.7; max-width: 640px; color: var(--ink-soft); }
+  .cue { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); justify-self: end; }
+
+  .featured { padding: 120px 0; border-bottom: 1px solid var(--line); }
+  .featured .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
+  .featured h2 em { font-style: italic; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .poster { position: relative; display: block; aspect-ratio: 3/4; background: var(--paper-soft); overflow: hidden; }
+  .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .tape { position: absolute; top: 24px; left: -40px; transform: rotate(-8deg); background: var(--accent); color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; padding: 8px 56px; text-transform: uppercase; }
+  .info .row { display: grid; grid-template-columns: 110px 1fr; gap: 32px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start; }
+  .info .row:first-of-type { border-top: 1px solid var(--line); }
+  .info .row .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); padding-top: 4px; }
+  .info .row strong { font-family: var(--serif); font-weight: 500; font-size: 22px; display: block; }
+  .info .row .sub { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+
+  .about { padding: 120px 0; }
+  .about .eyebrow { margin-bottom: 32px; }
+  .pull { font-family: var(--serif); font-size: clamp(32px, 3.6vw, 56px); line-height: 1.15; letter-spacing: -0.01em; max-width: 1100px; font-style: italic; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin: 80px 0 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .pillars article { display: flex; flex-direction: column; gap: 12px; }
+  .pillars .n { font-family: var(--serif); font-size: 28px; font-style: italic; color: var(--accent-deep); }
+  .pillars h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
+  .pillars p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+
+  @media (max-width: 900px) {
+    .meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    h1.display .l { padding-left: 0 !important; }
+    .lead-row { grid-template-columns: 1fr; gap: 24px; }
+    .grid { grid-template-columns: 1fr; gap: 40px; }
+    .pillars { grid-template-columns: 1fr; }
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { copy, languages, site, type Lang } from "../../data/site";
+import { copy, languages, siteAbout, site, type Lang } from "../../data/site";
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
@@ -8,24 +8,38 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Lang;
 const t = copy[lang];
+const about = siteAbout[lang];
+const paragraphs = t.aboutBody.split("\n\n");
 ---
-
-<BaseLayout lang={lang} title={`${t.aboutTitle} | ${site.brand[lang]}`} description={t.aboutBody.split("\n\n")[0]}>
-  <section class="section">
-    <div class="eyebrow">{site.brand[lang]}</div>
-    <h1>{t.aboutTitle}</h1>
-    <div class="body-copy about-copy">
-      {t.aboutBody.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
-    </div>
-  </section>
-
-  <section class="section section-tight">
-    <div class="split">
-      <div>
-        <div class="eyebrow">Fourth Wall</div>
-        <h2>{t.fourthWallTitle}</h2>
+<BaseLayout lang={lang} title={`${t.aboutTitle} | ${site.brand[lang].primary}`} description={paragraphs[0]}>
+  <section class="about">
+    <div class="wrap">
+      <span class="eyebrow">About — 关于</span>
+      <h1 class="display">{t.aboutTitle}</h1>
+      <p class="pull">
+        {about.pull.lead}<br/>
+        {about.pull.body}<em class="accent-word">{about.pull.accent}</em>{about.pull.tail}
+      </p>
+      <div class="body-grid">
+        <div class="copy">
+          {paragraphs.map((p) => <p>{p}</p>)}
+        </div>
+        <div class="banner" aria-hidden="true"></div>
       </div>
-      <div class="body-copy">
+      <div class="pillars">
+        {about.pillars.map((p) => (
+          <article>
+            <span class="n">{p.n}</span>
+            <h3>{p.h}</h3>
+            <p>{p.p}</p>
+          </article>
+        ))}
+      </div>
+      <div class="fourth-wall">
+        <div>
+          <span class="eyebrow">Fourth Wall</span>
+          <h2 class="display">{t.fourthWallTitle}</h2>
+        </div>
         <p>{t.fourthWallBody}</p>
       </div>
     </div>
@@ -33,7 +47,22 @@ const t = copy[lang];
 </BaseLayout>
 
 <style>
-  .about-copy {
-    margin-top: 34px;
+  .about { padding: 80px 0 40px; }
+  .about .eyebrow { margin-bottom: 24px; }
+  h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 56px; }
+  .pull { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.2; font-style: italic; max-width: 1000px; padding-bottom: 64px; border-bottom: 1px solid var(--line); }
+  .body-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; align-items: start; }
+  .copy p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 18px; }
+  .banner { aspect-ratio: 4/5; background: linear-gradient(135deg, var(--paper-soft), var(--paper-deep)); position: relative; }
+  .banner::before { content: "ARCHIVE / IMAGE"; position: absolute; top: 16px; left: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 56px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  .pillars article { display: flex; flex-direction: column; gap: 12px; }
+  .pillars .n { font-family: var(--serif); font-size: 32px; font-style: italic; color: var(--accent-deep); }
+  .pillars h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
+  .pillars p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
+  .fourth-wall { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; padding: 80px 0; align-items: start; }
+  .fourth-wall p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); }
+  @media (max-width: 900px) {
+    .body-grid, .pillars, .fourth-wall { grid-template-columns: 1fr; gap: 40px; }
   }
 </style>

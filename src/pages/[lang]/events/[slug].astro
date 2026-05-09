@@ -19,6 +19,9 @@ const lang = Astro.params.lang as Lang;
 const t = copy[lang];
 const data = event.data;
 const title = lang === "zh" ? data.titleZh : data.titleEn;
+const titleParts = title.split(" ");
+const titleFirst = titleParts[0];
+const titleRest = titleParts.slice(1).join(" ");
 const subtitle = lang === "zh" ? data.subtitleZh : data.subtitleEn;
 const description = lang === "zh" ? data.descriptionZh : data.descriptionEn;
 const playwright = lang === "zh" ? data.playwrightZh : data.playwrightEn;
@@ -31,178 +34,141 @@ const jsonLd = {
   startDate: "2026-04-26T19:00:00-07:00",
   eventStatus: "https://schema.org/EventCompleted",
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: {
-    "@type": "Place",
-    name: data.venue.name,
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: data.venue.address,
-      addressLocality: "Vancouver",
-      addressRegion: "BC",
-      postalCode: "V6H 3S2",
-      addressCountry: "CA",
-    },
-  },
+  location: { "@type": "Place", name: data.venue.name, address: { "@type": "PostalAddress", streetAddress: data.venue.address, addressLocality: "Vancouver", addressRegion: "BC", postalCode: "V6H 3S2", addressCountry: "CA" } },
   image: new URL(data.bannerImage, site.url).toString(),
-  organizer: {
-    "@type": "Organization",
-    name: "Stage 4th Society",
-    url: site.url,
-  },
+  organizer: { "@type": "Organization", name: "Stage 4th Society", url: site.url },
   description: seoDescription,
 };
 ---
-
 <BaseLayout lang={lang} title={seoTitle} description={seoDescription} image={data.bannerImage}>
   <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
-  <section class="event-hero">
-    <img src={data.bannerImage} alt={title} />
-  </section>
-
-  <section class="section event-title">
-    <div class="eyebrow">{t.past}</div>
-    <h1>{title}</h1>
-    <p class="lead">{subtitle}</p>
-    <div class="button-row">
-      <a class="button" href="#program">{t.viewProgram}</a>
-      <a class="button secondary" href={`/${lang}/contact`}>{t.followCta}</a>
-    </div>
-  </section>
-
-  <section class="section section-tight">
-    <div class="info-grid event-info">
-      <div class="info-item">
-        <span>{t.organizer}</span>
-        Stage 4th Society（第四面墙拆除队）
-      </div>
-      <div class="info-item">
-        <span>{t.eventDetails}</span>
-        {data.dateTime}
-      </div>
-      <div class="info-item">
-        <span>{data.venue.name}</span>
-        {data.venue.address}, {data.venue.city}
-      </div>
-      <div class="info-item">
-        <span>Language</span>
-        {lang === "zh" ? data.language.zh : data.language.en}
+  <!-- CINEMATIC HERO -->
+  <section class="cinema">
+    <img class="bg" src={data.bannerImage} alt={title} />
+    <div class="overlay"></div>
+    <div class="wrap content">
+      <span class="eyebrow accent">{t.past}</span>
+      <h1 class="display"><em>{titleFirst}</em>{titleRest && <>{" "}{titleRest}</>}</h1>
+      <p class="sub">{subtitle}</p>
+      <div class="cta-row">
+        <a class="btn" href="#program">{t.viewProgram} <span class="arr">→</span></a>
+        <a class="btn ghost" href={`/${lang}/contact`}>{t.followCta}</a>
       </div>
     </div>
   </section>
 
-  <section class="section section-tight">
-    <div class="split poster-split">
-      <div class="poster-frame">
-        <img src={data.posterImage} alt={`${title} poster`} />
+  <!-- INFO STRIP -->
+  <section class="strip">
+    <div class="wrap">
+      <div class="info-grid">
+        <div><span class="k">{t.eventDetails}</span><strong>{data.dateTime}</strong></div>
+        <div><span class="k">{data.venue.name}</span><strong>{data.venue.address}</strong></div>
+        <div><span class="k">Language</span><strong>{lang === "zh" ? data.language.zh : data.language.en}</strong></div>
+        <div><span class="k">{t.organizer}</span><strong>Stage 4th Society</strong></div>
       </div>
-      <div>
-        <div class="eyebrow">{t.aboutPlay}</div>
-        <h2>{title}</h2>
-        <div class="body-copy event-copy">
-          {description.split("\n\n").map((paragraph) => <p>{paragraph}</p>)}
+    </div>
+  </section>
+
+  <!-- BODY: STICKY POSTER -->
+  <section class="body">
+    <div class="wrap split">
+      <aside class="poster-col">
+        <div class="poster-frame">
+          <img src={data.posterImage} alt={`${title} poster`} />
         </div>
+        {data.awards?.length > 0 && (
+          <div class="awards">
+            {data.awards.map((a) => <span>★ {a}</span>)}
+          </div>
+        )}
+      </aside>
+      <div class="copy">
+        <span class="eyebrow">{t.aboutPlay}</span>
+        <h2 class="display">{title}</h2>
+        <div class="copy-body">
+          {description.split("\n\n").map((p) => <p>{p}</p>)}
+        </div>
+        <hr/>
+        <span class="eyebrow">{t.aboutPlaywright} — David Auburn</span>
+        <p class="copy-body">{playwright}</p>
       </div>
     </div>
   </section>
 
-  <section class="section section-tight">
-    <div class="split">
-      <div>
-        <div class="eyebrow">David Auburn</div>
-        <h2>{t.aboutPlaywright}</h2>
-      </div>
-      <div class="body-copy">
-        <p>{playwright}</p>
+  <!-- PROGRAM CTA -->
+  <section id="program" class="program-cta">
+    <div class="wrap">
+      <span class="eyebrow inverse">{t.program}</span>
+      <h2 class="display">{t.viewProgram}</h2>
+      <div class="program-grid">
+        {data.programFiles.map((f, i) => {
+          const roman = ["I", "II", "III", "IV", "V", "VI"][i] ?? String(i + 1);
+          return (
+            <a href={f.url} target="_blank" rel="noreferrer" class="prog-tile">
+              <span class="roman">{roman}</span>
+              <span class="lbl">{f.label}</span>
+              <span class="arr">↗</span>
+            </a>
+          );
+        })}
       </div>
     </div>
-  </section>
-
-  <section id="program" class="section section-tight">
-    <div class="eyebrow">{t.program}</div>
-    <h2>{t.viewProgram}</h2>
-    <div class="program-list">
-      {data.programFiles.map((file) => <a href={file.url} target="_blank">{file.label}</a>)}
-    </div>
-  </section>
-
-  <section class="section section-tight awards">
-    {data.awards.map((award) => <span>{award}</span>)}
   </section>
 </BaseLayout>
 
 <style>
-  .event-hero {
-    background: var(--ink);
-  }
+  /* Cinema hero */
+  .cinema { position: relative; min-height: 78vh; display: flex; align-items: flex-end; overflow: hidden; background: var(--ink); }
+  .cinema .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
+  .cinema .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(22,20,15,0.4) 0%, rgba(22,20,15,0.85) 70%, var(--ink) 100%); }
+  .cinema .content { position: relative; padding: 120px 0 80px; color: var(--paper); }
+  .cinema .eyebrow { color: var(--accent); margin-bottom: 24px; }
+  .cinema .eyebrow::before { background: var(--accent); }
+  .cinema h1.display { font-size: clamp(64px, 9vw, 156px); color: var(--paper); margin-bottom: 16px; }
+  .cinema h1.display em { font-style: italic; color: var(--accent); }
+  .cinema .sub { font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.4vw, 32px); color: rgba(243,237,224,0.78); margin-bottom: 40px; }
+  .cinema .cta-row { display: flex; gap: 12px; flex-wrap: wrap; }
+  .cinema .btn.ghost { background: transparent; border: 1px solid rgba(243,237,224,0.4); color: var(--paper); }
+  .cinema .btn.ghost:hover { background: var(--paper); color: var(--ink); }
 
-  .event-hero img {
-    aspect-ratio: 16 / 7;
-    margin: 0 auto;
-    object-fit: cover;
-    width: 100%;
-  }
+  /* Info strip */
+  .strip { padding: 56px 0; border-bottom: 1px solid var(--line); }
+  .info-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .info-grid .k { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .info-grid strong { font-family: var(--serif); font-weight: 500; font-size: 18px; line-height: 1.3; }
 
-  .event-title {
-    padding-bottom: 28px;
-  }
+  /* Body */
+  .body { padding: 96px 0; border-bottom: 1px solid var(--line); }
+  .split { display: grid; grid-template-columns: 0.8fr 1.4fr; gap: 80px; align-items: start; }
+  .poster-col { position: sticky; top: 120px; }
+  .poster-frame { background: var(--paper); border: 1px solid var(--line); padding: 12px; }
+  .poster-frame img { width: 100%; display: block; }
+  .awards { display: flex; flex-direction: column; gap: 8px; margin-top: 20px; font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink-soft); }
+  .copy .eyebrow { margin-bottom: 20px; display: inline-flex; }
+  .copy h2.display { font-size: clamp(40px, 5vw, 72px); margin-bottom: 28px; }
+  .copy-body p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 18px; }
+  .copy hr { border: none; border-top: 1px solid var(--line); margin: 56px 0 32px; }
 
-  .event-info {
-    margin-top: 0;
-  }
+  /* Program CTA */
+  .program-cta { background: var(--ink); color: var(--paper); padding: 96px 0; }
+  .program-cta .eyebrow.inverse { color: rgba(243,237,224,0.5); margin-bottom: 24px; }
+  .program-cta .eyebrow.inverse::before { background: rgba(243,237,224,0.5); }
+  .program-cta h2.display { color: var(--paper); margin-bottom: 56px; }
+  .program-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid rgba(243,237,224,0.2); }
+  .prog-tile { padding: 40px 24px; border-right: 1px solid rgba(243,237,224,0.2); border-bottom: 1px solid rgba(243,237,224,0.2); display: flex; flex-direction: column; justify-content: space-between; min-height: 220px; transition: background .2s, color .2s; }
+  .prog-tile:last-child { border-right: none; }
+  .prog-tile:hover { background: var(--accent); color: var(--ink); }
+  .prog-tile .roman { font-family: var(--serif); font-style: italic; font-size: 56px; line-height: 1; color: var(--accent); }
+  .prog-tile:hover .roman { color: var(--ink); }
+  .prog-tile .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  .prog-tile .arr { font-size: 18px; align-self: flex-end; }
 
-  .poster-split {
-    align-items: start;
-    grid-template-columns: minmax(260px, 0.55fr) minmax(0, 1fr);
-  }
-
-  .poster-frame {
-    background: white;
-    border: 1px solid var(--line);
-    padding: 10px;
-  }
-
-  .event-copy {
-    margin-top: 24px;
-  }
-
-  .program-list {
-    display: grid;
-    gap: 12px;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-    margin-top: 28px;
-  }
-
-  .program-list a {
-    border: 1px solid var(--line);
-    font-weight: 850;
-    padding: 18px;
-  }
-
-  .program-list a:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
-
-  .awards {
-    border-top: 1px solid var(--line);
-    color: var(--muted);
-    display: flex;
-    flex-wrap: wrap;
-    font-family: Georgia, "Times New Roman", serif;
-    font-size: 15px;
-    gap: 18px;
-    justify-content: center;
-    text-transform: uppercase;
-  }
-
-  @media (max-width: 760px) {
-    .event-hero img {
-      aspect-ratio: 4 / 3;
-    }
-
-    .program-list {
-      grid-template-columns: 1fr;
-    }
+  @media (max-width: 900px) {
+    .info-grid { grid-template-columns: repeat(2, 1fr); }
+    .split { grid-template-columns: 1fr; gap: 40px; }
+    .poster-col { position: static; }
+    .program-grid { grid-template-columns: 1fr 1fr; }
+    .prog-tile:nth-child(2n) { border-right: none; }
   }
 </style>

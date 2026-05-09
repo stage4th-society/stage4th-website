@@ -6,81 +6,82 @@ import { copy, type Lang } from "../data/site";
 interface Props {
   event: CollectionEntry<"events">;
   lang: Lang;
+  index?: number;
+  variant?: "row" | "card";
 }
 
-const { event, lang } = Astro.props;
+const { event, lang, index = 0, variant = "row" } = Astro.props;
 const data = event.data;
 const slug = eventSlug(event);
 const title = lang === "zh" ? data.titleZh : data.titleEn;
 const subtitle = lang === "zh" ? data.subtitleZh : data.subtitleEn;
 const description = lang === "zh" ? data.descriptionZh : data.descriptionEn;
+const isPast = data.status === "past" || data.status === "cancelled";
+const statusLabel = isPast ? copy[lang].past : copy[lang].upcoming;
 ---
 
-<article class="event-card">
-  <a href={`/${lang}/events/${slug}`} class="event-card-image">
-    <img src={data.bannerImage} alt={title} loading="lazy" />
+{variant === "row" ? (
+  <a class="event-row" href={`/${lang}/events/${slug}`}>
+    <span class="num">[{String(index + 1).padStart(2, "0")}]</span>
+    <span class="title"><em>{title}</em></span>
+    <span class="meta">{data.dateTime}</span>
+    <span class={`status ${isPast ? "muted" : ""}`}>{statusLabel}</span>
+    <span class="arr">→</span>
   </a>
-  <div class="event-card-body">
-    <span class="status">{copy[lang].past}</span>
-    <h3><a href={`/${lang}/events/${slug}`}>{title}</a></h3>
-    <p class="subtitle">{subtitle}</p>
-    <p>{description.split("\n\n")[0]}</p>
-    <a class="text-link" href={`/${lang}/events/${slug}`}>{copy[lang].viewProgram}</a>
-  </div>
-</article>
+) : (
+  <article class="event-card">
+    <a href={`/${lang}/events/${slug}`} class="event-card-image">
+      <img src={data.bannerImage} alt={title} loading="lazy" />
+    </a>
+    <div class="event-card-body">
+      <span class="status">{statusLabel}</span>
+      <h3><a href={`/${lang}/events/${slug}`}>{title}</a></h3>
+      <p class="subtitle">{subtitle}</p>
+      <p>{description.split("\n\n")[0]}</p>
+      <a class="text-link" href={`/${lang}/events/${slug}`}>{copy[lang].viewProgram}</a>
+    </div>
+  </article>
+)}
 
 <style>
+  /* Row variant */
+  .event-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 220px 100px 32px;
+    gap: 32px; align-items: center;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    font-family: var(--serif);
+    transition: padding .25s;
+  }
+  .event-row:hover { padding-left: 12px; }
+  .event-row .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); }
+  .event-row .title { font-size: clamp(22px, 2.6vw, 36px); font-weight: 500; }
+  .event-row .title em { font-style: italic; }
+  .event-row .meta { font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+  .event-row .status { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent-deep); justify-self: end; }
+  .event-row .status.muted { color: var(--muted); }
+  .event-row .arr { font-size: 18px; color: var(--ink-soft); transition: transform .2s; justify-self: end; }
+  .event-row:hover .arr { transform: translateX(6px); color: var(--accent-deep); }
+
+  /* Card variant (kept for back-compat) */
   .event-card {
     border-top: 1px solid var(--line);
-    display: grid;
-    gap: 28px;
+    display: grid; gap: 28px;
     grid-template-columns: minmax(260px, 0.85fr) minmax(0, 1fr);
     padding-top: 28px;
   }
-
-  .event-card-image {
-    background: var(--paper-deep);
-    overflow: hidden;
-  }
-
-  .event-card-image img {
-    aspect-ratio: 16 / 9;
-    object-fit: cover;
-    transition: transform 180ms ease;
-    width: 100%;
-  }
-
-  .event-card:hover img {
-    transform: scale(1.03);
-  }
-
-  .event-card-body {
-    display: grid;
-    gap: 12px;
-  }
-
-  .status {
-    color: var(--red);
-    font-size: 13px;
-    font-weight: 850;
-    text-transform: uppercase;
-  }
-
-  .subtitle {
-    color: var(--ink);
-    font-weight: 760;
-  }
-
-  .text-link {
-    border-bottom: 2px solid var(--accent);
-    font-weight: 850;
-    justify-self: start;
-    margin-top: 8px;
-  }
+  .event-card-image { background: var(--paper-deep); overflow: hidden; }
+  .event-card-image img { aspect-ratio: 16 / 9; object-fit: cover; transition: transform 180ms ease; width: 100%; }
+  .event-card:hover img { transform: scale(1.03); }
+  .event-card-body { display: grid; gap: 12px; }
+  .status { color: var(--accent-deep); font-family: var(--mono); font-size: 11px; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; }
+  .subtitle { color: var(--ink); font-style: italic; font-family: var(--serif); }
+  .text-link { border-bottom: 2px solid var(--accent); font-weight: 500; justify-self: start; margin-top: 8px; }
 
   @media (max-width: 760px) {
-    .event-card {
-      grid-template-columns: 1fr;
-    }
+    .event-row { grid-template-columns: 50px 1fr; }
+    .event-row .meta, .event-row .status, .event-row .arr { display: none; }
+    .event-card { grid-template-columns: 1fr; }
   }
 </style>
