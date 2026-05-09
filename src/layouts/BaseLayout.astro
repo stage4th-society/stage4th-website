@@ -66,8 +66,16 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
         -webkit-font-smoothing: antialiased;
       }
       a { color: inherit; text-decoration: none; }
-      .wrap { max-width: 1320px; margin: 0 auto; padding: 0 32px; }
-      @media (max-width: 720px) { .wrap { padding: 0 20px; } }
+      .wrap {
+        width: min(calc(100% - 64px), 1320px);
+        margin-inline: auto;
+      }
+      @media (max-width: 720px) {
+        .wrap { width: min(calc(100% - 48px), 1320px); }
+      }
+      @media (max-width: 380px) {
+        .wrap { width: min(calc(100% - 40px), 1320px); }
+      }
 
       /* Ticker */
       .ticker { background: var(--ink); color: var(--paper); padding: 9px 0; }
