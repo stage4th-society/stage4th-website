@@ -24,7 +24,10 @@ const paragraphs = t.aboutBody.split("\n\n");
         <div class="copy">
           {paragraphs.map((p) => <p>{p}</p>)}
         </div>
-        <div class="banner" aria-hidden="true"></div>
+        <div class="upcoming-image">
+           <img src={site.upcoming} alt="Staged Reading Series" />
+           <img src={site.past} alt="past event" />
+        </div>
       </div>
       <div class="pillars">
         {about.pillars.map((p) => (
@@ -47,21 +50,23 @@ const paragraphs = t.aboutBody.split("\n\n");
 </BaseLayout>
 
 <style>
-  .about { padding: 80px 0 40px; }
-  .about .eyebrow { margin-bottom: 24px; }
+  .about { padding: 40px 0 40px; }
+  .about .eyebrow { margin-bottom: 40px; }
   h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 56px; }
   .pull { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.2; font-style: italic; max-width: 1000px; padding-bottom: 64px; border-bottom: 1px solid var(--line); }
   .body-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; align-items: start; }
   .copy p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 18px; }
-  .banner { aspect-ratio: 4/5; background: linear-gradient(135deg, var(--paper-soft), var(--paper-deep)); position: relative; }
-  .banner::before { content: "ARCHIVE / IMAGE"; position: absolute; top: 16px; left: 16px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; color: var(--muted); }
+  .upcoming-image { display: flex; gap: 12px; margin-left: 30px; }
+  .upcoming-image img { width: calc(50% - 6px); aspect-ratio: 3 / 4; object-fit: cover; }
+  
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 56px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .pillars article { display: flex; flex-direction: column; gap: 12px; }
   .pillars .n { font-family: var(--serif); font-size: 32px; font-style: italic; color: var(--accent-deep); }
   .pillars h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
   .pillars p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
-  .fourth-wall { display: grid; grid-template-columns: 1fr 1.4fr; gap: 64px; padding: 80px 0; align-items: start; }
-  .fourth-wall p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); }
+  
+  .fourth-wall { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; padding: 60px 0; align-items: start; }
+  .fourth-wall p { margin-top: 70px; font-size: 16px; line-height: 1.75; color: var(--ink-soft); }
   @media (max-width: 900px) {
     .body-grid, .pillars, .fourth-wall { grid-template-columns: 1fr; gap: 40px; }
   }

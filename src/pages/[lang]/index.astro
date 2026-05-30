@@ -19,7 +19,9 @@ const proofSlug = eventSlug(proof);
 const proofTitle = lang === "zh" ? proof.data.titleZh : proof.data.titleEn;
 const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 ---
+
 <BaseLayout lang={lang} title={title} description={t.homeIntro}>
+  
   <!-- HERO -->
   <section class="hero">
     <div class="wrap">
@@ -28,21 +30,68 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
           <li><span class="k">{k}</span><span class="v">{v}</span></li>
         ))}
       </ul>
-      <h1 class="display">
-        {hero.title.map((line, i) => (
-          <span class={`l l${i + 1}`}>
-            {i === 1 ? <em>{line}</em> : i === hero.title.length - 1
-              ? <><span class="accent-word">{String(line).replace(/[.。]$/, "")}</span>{String(line).match(/[.。]$/)?.[0] ?? ""}</>
-              : line}
-          </span>
-        ))}
-      </h1>
-      <div class="lead-row">
-        <p class="lead">{hero.lead}</p>
+      {/*
+      <div class="hero-title-wrap">
+        <h1 class="display">
+          {hero.title.map((line, i) => (
+            <span class={`l l${i + 1}`}>
+              {i === 1 ? <em>{line}</em> : i === hero.title.length - 1
+                ? <><span class="accent-word">{String(line).replace(/[.。]$/, "")}</span>{String(line).match(/[.。]$/)?.[0] ?? ""}</>
+                : line}
+            </span>
+          ))}
+        </h1>
+
         <span class="cue">{hero.scrollCue}</span>
+      </div>
+       */}
+    </div>
+  </section>
+
+  <!-- UPCOMING -->
+  <section class="upcoming">
+    <div class="wrap">
+      <div class="head">
+        <span class="eyebrow">Upcoming — 活动预告</span>
+        <h2 class="display">Staged Reading Series</h2>
+      </div>
+
+      <div class="upcoming-grid">
+        <div class="upcoming-image">
+          <img src="/assets/events/upcoming.jpg" alt="Staged Reading Series" />
+        </div>
+        <div class="upcoming-text">
+          <h2 class="display">
+            <em>The Weight of Small Things</em>
+          </h2>
+          <p>
+            The first reading, <strong>The Weight of Small Things</strong>, 
+            brings together Susan Glaspell's <em>Suppressed Desires</em> and <em>Trifles</em> 
+            — two early modern one-act plays in conversation. 
+            One uses sharp satire to expose the absurdity of over-analysis; 
+            the other builds quiet tension around what is overlooked, unheard, and left unsaid.
+          </p>
+          <p>
+            Join us for a staged reading of rediscovery, reflection, and dialogue!          
+          </p>
+          <p>
+            <strong>Sat, Jul 4 · Sat, Jul 11</strong><br />
+            Two plays each day
+          </p>
+
+          <a
+            class="btn"
+            href={site.soding_link}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Reserve Tickets <span class="arr">→</span>
+          </a>
+        </div>
       </div>
     </div>
   </section>
+
 
   <!-- FEATURED -->
   <section class="featured">
@@ -83,6 +132,9 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
         {about.pull.lead}<br/>
         {about.pull.body}<em class="accent-word">{about.pull.accent}</em>{about.pull.tail}
       </p>
+
+      <p class="lead">{hero.lead}</p>
+      
       <div class="pillars">
         {about.pillars.map((p) => (
           <article>
@@ -98,24 +150,48 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 </BaseLayout>
 
 <style>
-  .hero { padding: 80px 0 120px; border-bottom: 1px solid var(--line); }
-  .meta { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-bottom: 40px; border-bottom: 1px solid var(--line); margin-bottom: 64px; }
+  .hero { padding: 40px 0; }
+  .meta { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-bottom: 40px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
   .meta li { display: flex; flex-direction: column; gap: 6px; }
   .meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
   .meta .v { font-family: var(--serif); font-size: 22px; }
+  /* .hero-title-wrap { position: relative; } 
   h1.display .l { display: block; }
   h1.display .l2 { padding-left: 8vw; font-style: italic; color: var(--ink-soft); }
   h1.display .l4 { padding-left: 4vw; }
   h1.display em { font-style: italic; }
-  .lead-row { display: grid; grid-template-columns: 2fr 1fr; gap: 80px; margin-top: 64px; padding-top: 32px; border-top: 1px solid var(--line); align-items: end; }
-  .lead { font-size: 16px; line-height: 1.7; max-width: 640px; color: var(--ink-soft); }
-  .cue { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); justify-self: end; }
+  .cue {
+    position: absolute;
+    right: 0;
+    bottom: -50px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }*/
 
-  .featured { padding: 120px 0; border-bottom: 1px solid var(--line); }
+  .upcoming { padding: 0 0 60px; border-bottom: 1px solid var(--line); }
+  .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
+  .upcoming h2 em { font-family: "Inter", sans-serif; font-size: 45px;}
+  .upcoming-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: start;
+    margin-top: 40px;
+  }
+  .upcoming-image { aspect-ratio: 3 / 4; max-height: 600px; margin-left: 30px; overflow: hidden; background: var(--paper-soft); }
+  .upcoming-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .upcoming-text { display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin-top: -20px; }
+  .upcoming-text p { font-size: 16px; line-height: 1.8; color: var(--ink-soft); }
+
+
+  .featured { padding: 60px 0; border-bottom: 1px solid var(--line); }
   .featured .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
   .featured h2 em { font-style: italic; }
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-  .poster { position: relative; display: block; aspect-ratio: 3/4; background: var(--paper-soft); overflow: hidden; }
+  .poster { position: relative; display: block; aspect-ratio: 3/4; max-height: 600px; margin-left: 30px; background: var(--paper-soft); overflow: hidden; }
   .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tape { position: absolute; top: 24px; left: -40px; transform: rotate(-8deg); background: var(--accent); color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; padding: 8px 56px; text-transform: uppercase; }
   .info .row { display: grid; grid-template-columns: 110px 1fr; gap: 32px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start; }
@@ -125,10 +201,10 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
   .info .row .sub { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
 
-  .about { padding: 120px 0; }
+  .about { padding: 40px 0; }
   .about .eyebrow { margin-bottom: 32px; }
-  .pull { font-family: var(--serif); font-size: clamp(32px, 3.6vw, 56px); line-height: 1.15; letter-spacing: -0.01em; max-width: 1100px; font-style: italic; }
-  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin: 80px 0 56px; padding-top: 40px; border-top: 1px solid var(--line); }
+  .pull { font-family: var(--serif); font-size: clamp(32px, 3.6vw, 56px); line-height: 1.15; letter-spacing: -0.01em; max-width: 1100px; margin-bottom: 32px; font-style: italic; }
+  .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin: 60px 0 56px; padding-top: 40px; border-top: 1px solid var(--line); }
   .pillars article { display: flex; flex-direction: column; gap: 12px; }
   .pillars .n { font-family: var(--serif); font-size: 28px; font-style: italic; color: var(--accent-deep); }
   .pillars h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
@@ -140,5 +216,12 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     .lead-row { grid-template-columns: 1fr; gap: 24px; }
     .grid { grid-template-columns: 1fr; gap: 40px; }
     .pillars { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 900px) {
+    .upcoming-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
   }
 </style>

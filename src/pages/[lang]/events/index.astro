@@ -12,8 +12,53 @@ const lang = Astro.params.lang as Lang;
 const t = copy[lang];
 const e = siteEvents[lang];
 const events = await getCollection("events");
-const past = events.filter((ev) => ev.data.status === "past" || ev.data.status === "cancelled");
 const upcoming = events.filter((ev) => ev.data.status === "upcoming" || ev.data.status === "active");
+const past = events.filter((ev) => ev.data.status === "past" || ev.data.status === "cancelled");
+const enCategories = [
+  {
+    key: "full-production",
+    title: "Full Production",
+  },
+  {
+    key: "script-reading",
+    title: "Script Reading",
+  },
+  {
+    key: "staged-reading",
+    title: "Staged Reading",
+  },
+  {
+    key: "acting-workshop",
+    title: "Acting Workshop",
+  },
+  {
+    key: "meetup",
+    title: "Meetup",
+  },
+] as const;
+const cnCategories = [
+  {
+    key: "full-production",
+    title: "正式制作",
+  },
+  {
+    key: "script-reading",
+    title: "剧本朗读",
+  },
+  { 
+    key: "staged-reading",
+    title: "舞台围读",
+  },
+  {
+    key: "acting-workshop",
+    title: "表演工作坊",
+  },
+  {
+    key: "meetup",
+    title: "交流活动",
+  },
+] as const;
+const categories = lang === "zh" ? cnCategories : enCategories;
 ---
 <BaseLayout lang={lang} title={`${t.eventsTitle} | ${site.brand[lang].primary}`} description={t.eventsIntro}>
   <section class="head">
@@ -39,7 +84,7 @@ const upcoming = events.filter((ev) => ev.data.status === "upcoming" || ev.data.
             const title = lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
             return (
               <li>
-                <a class="row" href={`/${lang}/events/${slug}`}>
+                <a class="row" href={site.soding_link}>
                   <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
                   <span class="title"><em>{title}</em></span>
                   <span class="meta">{ev.data.dateTime}</span>
@@ -61,30 +106,69 @@ const upcoming = events.filter((ev) => ev.data.status === "upcoming" || ev.data.
         <span class="count">[{String(past.length).padStart(2, "0")}]</span>
       </div>
       <ol class="rows">
-        {past.map((ev, i) => {
-          const slug = eventSlug(ev);
-          const title = lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
-          return (
-            <li>
-              <a class="row" href={`/${lang}/events/${slug}`}>
-                <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
-                <span class="title"><em>{title}</em></span>
-                <span class="meta">{ev.data.dateTime}</span>
-                <span class="status muted">{t.past}</span>
-                <span class="arr">→</span>
-              </a>
-            </li>
+      {
+        categories.map((category) => {
+          const items = past.filter(
+            (ev) => ev.data.category === category.key
           );
-        })}
+
+          return (
+            <section class="list-section">
+              <div class="wrap">
+
+                <div class="section-label">
+                  <span class="eyebrow">{category.title}</span>
+                  <span class="count">
+                    [{String(items.length).padStart(2, "0")}]
+                  </span>
+                </div>
+
+                {items.length === 0 ? (
+                  <div class="empty">Coming soon</div>
+                ) : (
+                  <ol class="rows">
+                    {items.map((ev, i) => {
+                      const slug = eventSlug(ev);
+                      const title =
+                        lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
+
+                      return (
+                        <li>
+                          <a class="row" href={`/${lang}/events/${slug}`}>
+                            <span class="num">
+                              [{String(i + 1).padStart(2, "0")}]
+                            </span>
+
+                            <span class="title">
+                              <em>{title}</em>
+                            </span>
+
+                            <span class="meta">{ev.data.dateTime}</span>
+
+                            <span class="status muted">{t.past}</span>
+
+                            <span class="arr">→</span>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ol>
+                )}
+
+              </div>
+            </section>
+          );
+        })
+      }
       </ol>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .head { padding: 80px 0 60px; border-bottom: 1px solid var(--line); }
+  .head { padding: 40px 0 40px; border-bottom: 1px solid var(--line); }
   .head .eyebrow { margin-bottom: 24px; }
-  h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 32px; }
+  h1.display { font-size: clamp(56px, 7vw, 80px); margin-bottom: 32px; }
   h1.display em { font-style: italic; color: var(--ink-soft); }
   .lead { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; }
 

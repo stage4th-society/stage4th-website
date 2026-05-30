@@ -4,6 +4,7 @@ const events = defineCollection({
   type: "content",
   schema: z.object({
     status: z.enum(["upcoming", "active", "past", "cancelled"]),
+    category: z.enum(["full-production", "script-reading", "staged-reading", "acting-workshop", "meetup"]),
     titleZh: z.string(),
     titleEn: z.string(),
     subtitleZh: z.string(),

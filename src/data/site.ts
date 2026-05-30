@@ -9,6 +9,9 @@ export const site = {
   xiaohongshu: "http://xhslink.com/m/7VOFBgRY4ym",
   wechatId: "van_fwd",
   logo: "/assets/logo/logo.png",
+  upcoming: "/assets/events/upcoming.jpg",
+  soding_link: "https://www.zeffy.com/en-CA/ticketing/staged-reading-series",
+  past: "/assets/events/proof/poster.png",
   xhsQr: "/assets/social/xhs-qr.png",
   brand: {
     zh: { primary: "第四面墙拆除队", secondary: "Stage 4th Society" },
@@ -122,19 +125,19 @@ export const siteHero = {
       ["Est.", "2024"],
       ["Based", "Vancouver, BC"],
       ["Form", "Non-profit theatre"],
-      ["Now", "In archive"],
+      ["Now", "Tickets on sale"], // In archive, Tickets on sale
     ],
     title: ["Where the", "wall falls,", "connection", "begins."],
     lead:
       "Stage 4th Society is a Vancouver-based non-profit theatre organization. We dismantle the imagined boundary between performers and audiences through readings, performances, workshops, and collaborative projects.",
-    scrollCue: "Scroll · 浏览",
+    scrollCue: "Scroll · 向下浏览",
   },
   zh: {
     meta: [
       ["创立", "2024"],
-      ["所在", "Vancouver"],
+      ["所在", "温哥华"],
       ["形式", "非营利戏剧"],
-      ["状态", "归档中"],
+      ["状态", "售票中"], // 归档中，售票中
     ],
     title: ["墙倒下的", "地方，", "连接", "才能生长。"],
     lead:
@@ -195,8 +198,15 @@ export const siteEvents = {
     titleLead: "Past, present, and",
     titleEm: "what's next.",
     lead: "Performances, readings, workshops, and collaborative projects — archived as they happen, organized by season.",
-    sectionPast: "Past",
+    sectionPast: "Archive",
     sectionUpcoming: "Upcoming",
+    sections: {
+      fullProduction: "Full Production",
+      scriptReading: "Script Reading",
+      stagedReading: "Staged Reading",
+      actingWorkshop: "Acting Workshop",
+      meetup: "Meetup",
+    },
     empty: "No upcoming events. Follow us for the next announcement.",
   },
   zh: {
@@ -206,6 +216,13 @@ export const siteEvents = {
     lead: "演出、围读、工作坊、共创项目——按时序归档，依季度整理。",
     sectionPast: "已结束",
     sectionUpcoming: "即将到来",
+    sections: {
+      fullProduction: "正式制作",
+      scriptReading: "剧本朗读",
+      stagedReading: "剧本围读",
+      actingWorkshop: "表演工作坊",
+      meetup: "交流活动",
+    },
     empty: "暂无即将到来的活动。关注我们以获取下一次公告。",
   },
 };
@@ -213,18 +230,67 @@ export const siteEvents = {
 export const siteContact = {
   en: {
     cells: [
-      { label: "Email", value: "vancouver.fwd@gmail.com", meta: "Reply within ~3 days", href: "mailto:vancouver.fwd@gmail.com" },
-      { label: "Instagram", value: "@vanfwd", meta: "Posters, recaps, calls", href: "https://www.instagram.com/vanfwd" },
-      { label: "Xiaohongshu", value: "Stage 4th Society", meta: "小红书 · production diaries", href: "http://xhslink.com/m/7VOFBgRY4ym" },
-      { label: "WeChat", value: "van_fwd", meta: "Add by ID for working groups", href: "#" },
+      {
+        label: "Email",
+        value: "vancouver.fwd@gmail.com",
+        meta: "Reply within ~3 days",
+        href: "mailto:vancouver.fwd@gmail.com",
+        icon: "/assets/logo/email.png",
+      },
+      {
+        label: "Instagram",
+        value: "@vanfwd",
+        meta: "Posters, recaps, calls",
+        href: "https://www.instagram.com/vanfwd",
+        icon: "/assets/logo/ins.avif",
+      },
+      {
+        label: "Xiaohongshu",
+        value: "Stage 4th Society",
+        meta: "小红书 · production diaries",
+        href: "http://xhslink.com/m/7VOFBgRY4ym",
+        icon: "/assets/logo/xiaohongshu.png",
+      },
+      {
+        label: "WeChat",
+        value: "van_fwd",
+        meta: "Add by ID for working groups",
+        href: "#",
+        icon: "/assets/logo/wechat.png",
+      },
     ],
   },
+
   zh: {
     cells: [
-      { label: "邮箱", value: "vancouver.fwd@gmail.com", meta: "通常 3 天内回复", href: "mailto:vancouver.fwd@gmail.com" },
-      { label: "Instagram", value: "@vanfwd", meta: "海报、回顾、招募", href: "https://www.instagram.com/vanfwd" },
-      { label: "小红书", value: "Stage 4th Society", meta: "制作日记 / 排练记录", href: "http://xhslink.com/m/7VOFBgRY4ym" },
-      { label: "微信", value: "van_fwd", meta: "通过 ID 添加，进入工作群", href: "#" },
+      {
+        label: "邮箱",
+        value: "vancouver.fwd@gmail.com",
+        meta: "通常 3 天内回复",
+        href: "mailto:vancouver.fwd@gmail.com",
+        icon: "/assets/logo/email.png",
+      },
+      {
+        label: "Instagram",
+        value: "@vanfwd",
+        meta: "海报、回顾、招募",
+        href: "https://www.instagram.com/vanfwd",
+        icon: "/assets/logo/ins.avif",
+      },
+      {
+        label: "小红书",
+        value: "Stage 4th Society",
+        meta: "制作日记 / 排练记录",
+        href: "http://xhslink.com/m/7VOFBgRY4ym",
+        icon: "/assets/logo/xiaohongshu.png",
+      },
+      {
+        label: "微信",
+        value: "van_fwd",
+        meta: "通过 ID 添加，进入工作群",
+        href: "#",
+        icon: "/assets/logo/wechat.png",
+      },
     ],
   },
 };

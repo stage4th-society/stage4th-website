@@ -22,25 +22,38 @@ const c = siteContact[lang];
   <section class="cells-section">
     <div class="wrap">
       <div class="cells">
-        {c.cells.map((cell) =>
-          cell.href === "#" ? (
-            <div class="cell">
+      {c.cells.map((cell) =>
+        cell.href === "#" ? (
+          <div class="cell">
+            <div class="cell-left">
               <span class="k">{cell.label}</span>
               <strong>{cell.value}</strong>
               <span class="meta">{cell.meta}</span>
             </div>
-          ) : (
-            <a class="cell" href={cell.href} target={cell.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+
+            <div class="cell-right">
+              <img src={cell.icon} alt={cell.label} />
+            </div>
+          </div>
+        ) : (
+          <a class="cell" href={cell.href} target={cell.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer">
+            <div class="cell-left">
               <span class="k">{cell.label}</span>
               <strong>{cell.value}</strong>
               <span class="meta">{cell.meta}</span>
-            </a>
-          )
-        )}
+            </div>
+
+            <div class="cell-right">
+              <img src={cell.icon} alt={cell.label} />
+            </div>
+          </a>
+        )
+      )}
       </div>
     </div>
   </section>
 
+  {/*
   <section class="qr-section">
     <div class="wrap qr-row">
       <div class="qr-card">
@@ -55,21 +68,43 @@ const c = siteContact[lang];
       </div>
     </div>
   </section>
+   */}
 </BaseLayout>
 
 <style>
-  .head { padding: 80px 0 60px; border-bottom: 1px solid var(--line); }
+  .head { padding: 40px 0 40px; border-bottom: 1px solid var(--line); }
   .head .eyebrow { margin-bottom: 24px; }
   h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 32px; }
   .lead { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; }
 
-  .cells-section { padding: 64px 0; border-bottom: 1px solid var(--line); }
-  .cells { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border-top: 1px solid var(--line); border-left: 1px solid var(--line); }
-  .cell { padding: 36px 32px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 12px; transition: background .2s; }
-  .cell:hover { background: var(--paper-soft); }
-  .cell .k { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-  .cell strong { font-family: var(--serif); font-weight: 500; font-size: 28px; word-break: break-all; }
-  .cell .meta { font-size: 13px; color: var(--ink-soft); }
+  .cells-section { padding: 64px 0; border-bottom: 1px solid var(--line); } 
+  .cells {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: min(1100px, 100%);
+    margin: 0 auto;
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+  .cell {
+    padding: 32px 32px;
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    transition: background .2s;
+  }
+  .cell-left { display: flex; flex-direction: column; gap: 12px; }
+  .cell-right img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    opacity: 0.85;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+  }
+  .cell:hover .cell-right img { transform: scale(1.08); opacity: 1; }
 
   .qr-section { padding: 80px 0; }
   .qr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
