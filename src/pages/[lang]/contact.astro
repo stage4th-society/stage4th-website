@@ -13,11 +13,34 @@ const c = siteContact[lang];
 <BaseLayout lang={lang} title={`${t.contactTitle} | ${site.brand[lang].primary}`} description={t.contactIntro}>
   <section class="head">
     <div class="wrap">
-      <span class="eyebrow">Contact — 联系</span>
+      <span class="eyebrow">{lang === "en" ? "Contact" : "联系"}</span>
       <h1 class="display">{t.contactTitle}</h1>
       <p class="lead">{t.contactIntro}</p>
     </div>
   </section>
+
+  <section class="form-section">
+    <form class="contact-form" action="https://formspree.io/f/xredwgrp" method="POST">
+
+      <label class="field">
+        <span>Name</span>
+        <input type="text" name="name" required />
+      </label>
+
+      <label class="field">
+        <span>Email</span>
+        <input type="email" name="email" required />
+      </label>
+
+      <label class="field">
+        <span>Message</span>
+        <textarea name="message" required></textarea>
+      </label>
+
+      <button type="submit" class="btn">Send</button>
+
+    </form>
+    </section>
 
   <section class="cells-section">
     <div class="wrap">
@@ -28,7 +51,7 @@ const c = siteContact[lang];
             <div class="cell-left">
               <span class="k">{cell.label}</span>
               <strong>{cell.value}</strong>
-              <span class="meta">{cell.meta}</span>
+              {/*<span class="meta">{cell.meta}</span> */}
             </div>
 
             <div class="cell-right">
@@ -40,7 +63,7 @@ const c = siteContact[lang];
             <div class="cell-left">
               <span class="k">{cell.label}</span>
               <strong>{cell.value}</strong>
-              <span class="meta">{cell.meta}</span>
+              {/*<span class="meta">{cell.meta}</span> */}
             </div>
 
             <div class="cell-right">
@@ -52,6 +75,7 @@ const c = siteContact[lang];
       </div>
     </div>
   </section>
+
 
   {/*
   <section class="qr-section">
@@ -77,35 +101,69 @@ const c = siteContact[lang];
   h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 32px; }
   .lead { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 640px; }
 
+  .contact-form {
+    padding: 40px 0 40px; 
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .field span {
+    font-family: var(--sans);
+    font-size: 16px;
+    color: var(--ink);
+  }
+  .field input,
+  .field textarea {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 16px 18px;
+
+    border: 1px solid #000; /* 或 var(--line-strong) */
+    background: #fff;
+
+    font-size: 15px;
+    font-family: var(--sans);
+
+    outline: none;
+  }
+  .field textarea {
+    min-height: 220px;
+  }
+
   .cells-section { padding: 64px 0; border-bottom: 1px solid var(--line); } 
   .cells {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: min(1100px, 100%);
+    display: flex;
+    flex-direction: column;
+    width: min(700px, 100%);
     margin: 0 auto;
-    border-top: 1px solid var(--line);
-    border-left: 1px solid var(--line);
   }
   .cell {
-    padding: 32px 32px;
-    border-right: 1px solid var(--line);
-    border-bottom: 1px solid var(--line);
+    padding: 16px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 24px;
-    transition: background .2s;
+    border-bottom: 1px solid var(--line);
   }
   .cell-left { display: flex; flex-direction: column; gap: 12px; }
   .cell-right img {
-    width: 80px;
-    height: 80px;
+    width: 60px;
+    height: 60px;
     object-fit: contain;
     opacity: 0.85;
     transition: transform 0.2s ease, opacity 0.2s ease;
   }
   .cell:hover .cell-right img { transform: scale(1.08); opacity: 1; }
 
+  {/*
   .qr-section { padding: 80px 0; }
   .qr-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
   .qr-card { display: flex; flex-direction: column; gap: 16px; padding: 32px; border: 1px solid var(--line); }
@@ -116,6 +174,7 @@ const c = siteContact[lang];
   .qr.id-card { background: var(--paper-soft); font-family: var(--mono); text-align: center; }
   .qr.id-card strong { font-size: clamp(22px, 5vw, 44px); letter-spacing: 0.04em; word-break: break-word; }
   .qr.id-card span { color: var(--muted); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; }
+  */}
 
   @media (max-width: 760px) {
     .cells, .qr-row { grid-template-columns: 1fr; }

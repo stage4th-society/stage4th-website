@@ -28,7 +28,7 @@ export const nav = {
     { label: "首页", href: "/zh" },
     { label: "关于", href: "/zh/about" },
     { label: "活动", href: "/zh/events" },
-    { label: "联系", href: "/zh/contact" },
+    { label: "联系我们", href: "/zh/contact" },
   ],
   en: [
     { label: "Home", href: "/en" },
@@ -57,7 +57,7 @@ export const copy = {
       '"第四面墙"（Fourth Wall）是一个戏剧术语，指虚构在镜框式舞台上、将演员与观众分隔开的"无形墙壁"。打破这面墙意指演员直接与观众交流，承认观众的存在。',
     eventsTitle: "活动",
     eventsIntro: "我们的演出、围读、工作坊与共创项目会在这里持续归档。",
-    contactTitle: "联系",
+    contactTitle: "联系我们",
     contactIntro: "欢迎通过社交媒体或邮件联系合作、演出、志愿者与社群相关事宜。",
     viewProgram: "查看场刊",
     eventDetails: "演出信息",
@@ -86,7 +86,7 @@ export const copy = {
       'The "fourth wall" is a theatre and film term for the imagined invisible wall separating performers from the audience. Breaking it means directly acknowledging and engaging the audience, making their presence part of the theatrical experience.',
     eventsTitle: "Events",
     eventsIntro: "Our performances, readings, workshops, and collaborative projects are archived here.",
-    contactTitle: "Contact",
+    contactTitle: "Contact Us",
     contactIntro: "Reach us for collaborations, productions, volunteer opportunities, and community inquiries.",
     viewProgram: "View Program",
     eventDetails: "Event Details",
@@ -245,7 +245,7 @@ export const siteContact = {
         icon: "/assets/logo/ins.avif",
       },
       {
-        label: "Xiaohongshu",
+        label: "RedNote",
         value: "Stage 4th Society",
         meta: "小红书 · production diaries",
         href: "http://xhslink.com/m/7VOFBgRY4ym",
@@ -275,7 +275,7 @@ export const siteContact = {
         value: "@vanfwd",
         meta: "海报、回顾、招募",
         href: "https://www.instagram.com/vanfwd",
-        icon: "/assets/logo/ins.avif",
+        icon: "/assets/logo/ins.jpeg",
       },
       {
         label: "小红书",
@@ -303,7 +303,7 @@ export const siteFooter = {
     desc: "Stage 4th Society — 第四面墙拆除队. A Vancouver-based non-profit theatre organization. Readings, performances, workshops, and collaborative projects.",
     cols: [
       { h: "Site", items: [["Home", "/en"], ["About", "/en/about"], ["Events", "/en/events"], ["Contact", "/en/contact"]] },
-      { h: "Reach", items: [["Email", "mailto:vancouver.fwd@gmail.com"], ["Instagram", "https://www.instagram.com/vanfwd"], ["Xiaohongshu", "http://xhslink.com/m/7VOFBgRY4ym"], ["WeChat: van_fwd", "#"]] },
+      { h: "Reach", items: [["Email", "mailto:vancouver.fwd@gmail.com"], ["Instagram", "https://www.instagram.com/vanfwd"], ["RedNote", "http://xhslink.com/m/7VOFBgRY4ym"], ["WeChat: van_fwd", "#"]] },
       { h: "Latest", items: [["Proof / 求证", "/en/events/proof-2026-04-26"], ["Archive", "/en/events"]] },
     ],
     meta: ["© Stage 4th Society 2026", "Vancouver, BC, Canada", "Built with Astro · Cloudflare Pages"],
@@ -314,7 +314,7 @@ export const siteFooter = {
     markTail: "才能生长。",
     desc: "第四面墙拆除队 Stage 4th Society。一个活跃于温哥华的非营利戏剧组织——围读、演出、工作坊与共创项目。",
     cols: [
-      { h: "站点", items: [["首页", "/zh"], ["关于", "/zh/about"], ["活动", "/zh/events"], ["联系", "/zh/contact"]] },
+      { h: "站点", items: [["首页", "/zh"], ["关于", "/zh/about"], ["活动", "/zh/events"], ["联系我们", "/zh/contact"]] },
       { h: "联系", items: [["邮箱", "mailto:vancouver.fwd@gmail.com"], ["Instagram", "https://www.instagram.com/vanfwd"], ["小红书", "http://xhslink.com/m/7VOFBgRY4ym"], ["微信：van_fwd", "#"]] },
       { h: "最新", items: [["求证 Proof", "/zh/events/proof-2026-04-26"], ["归档", "/zh/events"]] },
     ],

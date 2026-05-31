@@ -52,11 +52,11 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
   <section class="upcoming">
     <div class="wrap">
       <div class="head">
-        <span class="eyebrow">Upcoming — 活动预告</span>
+        <span class="eyebrow">{lang === "en" ? "Upcoming Event" : "活动预告"}</span>
         <h2 class="display">Staged Reading Series</h2>
       </div>
 
-      <div class="upcoming-grid">
+      <div class="grid">
         <div class="upcoming-image">
           <img src="/assets/events/upcoming.jpg" alt="Staged Reading Series" />
         </div>
@@ -71,6 +71,10 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
           <p>
             {lang === "en" ? (
               <>
+                Some plays were written long ago, but they have never truly left the stage. 
+                Across different times and cultures, these works continue to speak to questions 
+                that feel familiar today: relationships, identity, freedom, social expectations, 
+                and the choices people make under pressure.<br><br>
                 The first reading, <strong>The Weight of Small Things</strong>,
                 brings together Susan Glaspell's <em>Suppressed Desires</em> and <em>Trifles</em>
                 — two early modern one-act plays in conversation.
@@ -79,6 +83,8 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
               </>
             ) : (
               <>
+                有些剧本写在很久以前，却从未真正离开舞台。跨越不同的时代与文化，
+                这些作品依然回应着今天我们熟悉的问题：关系、身份、自由、社会期待，以及人在压力之下作出的选择。<br><br>
                 首场朗读《小事之重》将呈现苏珊·格拉斯佩尔的两部独幕剧：《压抑的欲望》与《琐事》。
                 这两部早期现代短剧彼此呼应：一部以犀利的讽刺揭示过度分析的荒诞，
                 另一部则在安静的张力中展开那些被忽略、未被听见、也未曾说出口的事。
@@ -148,7 +154,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
   <!-- ABOUT PREVIEW -->
   <section class="about">
     <div class="wrap">
-      <span class="eyebrow">About — 关于</span>
+      <span class="eyebrow">{lang === "en" ? "About Us" : "关于我们"}</span>
       <p class="pull">
         {about.pull.lead}<br/>
         {about.pull.body}<em class="accent-word">{about.pull.accent}</em>{about.pull.tail}
@@ -194,14 +200,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 
   .upcoming { padding: 0 0 60px; border-bottom: 1px solid var(--line); }
   .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
-  .upcoming h2 em { font-family: "Inter", sans-serif; font-size: 45px;}
-  .upcoming-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 64px;
-    align-items: start;
-    margin-top: 40px;
-  }
+  .upcoming h2 em { font-family: "Inter", sans-serif; font-size: 45px; font-style: normal;}
   .upcoming-image { aspect-ratio: 3 / 4; max-height: 600px; margin-left: 0px; overflow: hidden; background: var(--paper-soft); }
   .upcoming-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .upcoming-text { display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin-top: -20px; }
@@ -211,7 +210,14 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
   .featured { padding: 60px 0; border-bottom: 1px solid var(--line); }
   .featured .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
   .featured h2 em { font-style: italic; }
-  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .grid { 
+    display: grid; 
+    grid-template-columns: 1fr 1.25fr; 
+    gap: 64px; 
+    max-width: 1100px; 
+    margin: 40px auto 0; 
+    transform: translateX(-60px);
+  }
   .poster { position: relative; display: block; aspect-ratio: 3/4; max-height: 600px; margin-left: 0px; background: var(--paper-soft); overflow: hidden; }
   .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .tape { position: absolute; top: 24px; left: -40px; transform: rotate(-8deg); background: var(--accent); color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; padding: 8px 56px; text-transform: uppercase; }
@@ -221,6 +227,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
   .info .row strong { font-family: var(--serif); font-weight: 500; font-size: 22px; display: block; }
   .info .row .sub { display: block; font-size: 13px; color: var(--muted); margin-top: 4px; }
   .cta-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 32px; }
+
 
   .about { padding: 40px 0; }
   .about .eyebrow { margin-bottom: 32px; }
@@ -235,13 +242,9 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     .meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     h1.display .l { padding-left: 0 !important; }
     .lead-row { grid-template-columns: 1fr; gap: 24px; }
-    .grid { grid-template-columns: 1fr; gap: 40px; }
+    .grid { grid-template-columns: 1fr; gap: 40px; transform: none;}
     .pillars { grid-template-columns: 1fr; }
-  }
-
-  @media (max-width: 768px) {
-    .upcoming-grid { grid-template-columns: 1fr; gap: 40px; }
-    .upcoming-image { margin-left: 0; }
     .upcoming-text { margin-top: 0; }
   }
+
 </style>
