@@ -242,7 +242,7 @@ export const siteContact = {
         value: "@vanfwd",
         meta: "Posters, recaps, calls",
         href: "https://www.instagram.com/vanfwd",
-        icon: "/assets/social/ins.avif",
+        icon: "/assets/social/ins.jpeg",
       },
       {
         label: "RedNote",
