@@ -41,9 +41,9 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
 
     <style is:global>
       :root {
-        --paper: #f9f6f1;
-        --paper-soft: #f2ede5;
-        --paper-deep: #e6dccf;
+        --paper: #ffffff;
+        --paper-soft: #fafafa;
+        --paper-deep: #f3f3f3;
         --ink: #16140f;
         --ink-soft: #3a352b;
         --muted: #6b6555;
@@ -95,9 +95,10 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
       /* Header */
       header.site {
         position: sticky; top: 0; z-index: 50;
-        background: rgba(249, 246, 241, 0.92);
-        backdrop-filter: blur(10px);
-        border-bottom: 1px solid var(--line);
+        background: rgba(252, 250, 246, 0.62);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(22, 20, 15, 0.08);
       }
       header.site .bar {
         display: grid; grid-template-columns: 1fr auto 1fr; align-items: center;

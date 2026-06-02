@@ -22,31 +22,6 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 
 <BaseLayout lang={lang} title={title} description={t.homeIntro}>
   
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <ul class="meta">
-        {hero.meta.map(([k, v]) => (
-          <li><span class="k">{k}</span><span class="v">{v}</span></li>
-        ))}
-      </ul>
-      {/*
-      <div class="hero-title-wrap">
-        <h1 class="display">
-          {hero.title.map((line, i) => (
-            <span class={`l l${i + 1}`}>
-              {i === 1 ? <em>{line}</em> : i === hero.title.length - 1
-                ? <><span class="accent-word">{String(line).replace(/[.。]$/, "")}</span>{String(line).match(/[.。]$/)?.[0] ?? ""}</>
-                : line}
-            </span>
-          ))}
-        </h1>
-
-        <span class="cue">{hero.scrollCue}</span>
-      </div>
-       */}
-    </div>
-  </section>
 
   <!-- UPCOMING -->
   <section class="upcoming">
@@ -177,28 +152,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 </BaseLayout>
 
 <style>
-  .hero { padding: 40px 0; }
-  .meta { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-bottom: 40px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
-  .meta li { display: flex; flex-direction: column; gap: 6px; }
-  .meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-  .meta .v { font-family: var(--serif); font-size: 22px; }
-  /* .hero-title-wrap { position: relative; } 
-  h1.display .l { display: block; }
-  h1.display .l2 { padding-left: 8vw; font-style: italic; color: var(--ink-soft); }
-  h1.display .l4 { padding-left: 4vw; }
-  h1.display em { font-style: italic; }
-  .cue {
-    position: absolute;
-    right: 0;
-    bottom: -50px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }*/
-
-  .upcoming { padding: 0 0 60px; border-bottom: 1px solid var(--line); }
+  .upcoming { padding: 40px 0; border-bottom: 1px solid var(--line); }
   .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
   .upcoming h2 em { font-family: "Inter", sans-serif; font-size: 45px; font-style: normal;}
   .upcoming-image { aspect-ratio: 3 / 4; max-height: 600px; margin-left: 0px; overflow: hidden; background: var(--paper-soft); }
