@@ -28,7 +28,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">{lang === "en" ? "Upcoming Event" : "活动预告"}</span>
-        <h2 class="display">Staged Reading Series</h2>
+        <h2 class="display">{lang === "en" ? "Staged Reading Series" : "剧本朗读"}</h2>
       </div>
 
       <div class="grid">
@@ -100,7 +100,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">{featured.eyebrow}</span>
-        <h2 class="display"><em>{proofTitle}</em></h2>
+        <h2 class="display">{proofTitle}</h2>
       </div>
       <div class="grid">
         <a class="poster" href={`/${lang}/events/${proofSlug}`}>

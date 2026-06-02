@@ -31,7 +31,8 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
     <meta property="og:image" content={absoluteImage} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" type="image/png" href={site.logo} />
+    <!--link rel="icon" type="image/png" href={site.logo} /> -->
+    <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -95,7 +96,7 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
       /* Header */
       header.site {
         position: sticky; top: 0; z-index: 50;
-        background: rgba(252, 250, 246, 0.62);
+        background: rgba(255, 255, 255, 0.62);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border-bottom: 1px solid rgba(22, 20, 15, 0.08);
@@ -229,7 +230,7 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
     <header class="site">
       <div class="wrap bar">
       <a class="brand" href={`/${lang}`}>        
-        <img class="logo" src="/assets/logo/logo.png" alt="logo" />
+        {/*<img class="logo" src="/assets/logo/logo.png" alt="logo" /> */}
         <div class="brand-text">
           <span class="en">{site.brand[lang].primary}</span>
           <span class="zh">{site.brand[lang].secondary}</span>
