@@ -50,27 +50,33 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
                 Across different times and cultures, these works continue to speak to questions 
                 that feel familiar today: relationships, identity, freedom, social expectations, 
                 and the choices people make under pressure.<br><br>
+
                 The first reading, <strong>The Weight of Small Things</strong>,
                 brings together Susan Glaspell's <em>Suppressed Desires</em> and <em>Trifles</em>
                 — two early modern one-act plays in conversation.
                 One uses sharp satire to expose the absurdity of over-analysis;
-                the other builds quiet tension around what is overlooked, unheard, and left unsaid.
+                the other builds quiet tension around what is overlooked, unheard, and left unsaid.<br><br>
+
+                Presented in Mandarin with English subtitles, 
+                this staged reading invites audiences across languages to rediscover 
+                these classic short plays in a contemporary context.<br><br>
               </>
             ) : (
               <>
                 有些剧本写在很久以前，却从未真正离开舞台。跨越不同的时代与文化，
                 这些作品依然回应着今天我们熟悉的问题：关系、身份、自由、社会期待，以及人在压力之下作出的选择。<br><br>
+
                 首场朗读《小事之重》将呈现苏珊·格拉斯佩尔的两部独幕剧：《压抑的欲望》与《琐事》。
                 这两部早期现代短剧彼此呼应：一部以犀利的讽刺揭示过度分析的荒诞，
-                另一部则在安静的张力中展开那些被忽略、未被听见、也未曾说出口的事。
+                另一部则在安静的张力中展开那些被忽略、未被听见、也未曾说出口的事。<br><br>
+
+                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。<br><br>
+                
+                欢迎加入这场关于重新发现、反思与对话的读剧体验！
               </>
             )}
           </p>
-          <p>
-            {lang === "en"
-              ? "Join us for a staged reading of rediscovery, reflection, and dialogue!"
-              : "欢迎加入这场关于重新发现、反思与对话的读剧体验！"}
-          </p>
+
           <p>
             <strong>
               {lang === "en"
@@ -170,7 +176,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     gap: 64px; 
     max-width: 1100px; 
     margin: 40px auto 0; 
-    transform: translateX(-60px);
+    transform: none;
   }
   .poster { position: relative; display: block; aspect-ratio: 3/4; max-height: 600px; margin-left: 0px; background: var(--paper-soft); overflow: hidden; }
   .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }

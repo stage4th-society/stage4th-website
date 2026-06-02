@@ -31,6 +31,17 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
     <meta property="og:image" content={absoluteImage} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-QQX538HG15"></script>
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-QQX538HG15');
+  </script>    
+  
     <!--link rel="icon" type="image/png" href={site.logo} /> -->
     <link rel="icon" href="data:,">
     <link rel="preconnect" href="https://fonts.googleapis.com" />
