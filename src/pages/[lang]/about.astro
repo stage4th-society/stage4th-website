@@ -42,7 +42,7 @@ const hero = siteHero[lang];
 
   <section class="about">
     <div class="wrap">
-      <span class="eyebrow">About — 关于</span>
+      <span class="eyebrow">{lang === "en" ? "About Us" : "关于我们"}</span>
       <h1 class="display">{t.aboutTitle}</h1>
       <p class="pull">
         {about.pull.lead}<br/>
