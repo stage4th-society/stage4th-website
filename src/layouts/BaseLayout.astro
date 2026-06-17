@@ -105,6 +105,19 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
       .ticker .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); flex: none; }
 
       /* Header */
+      .menu-toggle {
+        display: none;
+        border: none;
+        background: none;
+        font-size: 28px;
+        cursor: pointer;
+        color: var(--ink);
+      }
+
+      .mobile-menu {
+        display: none;
+      }
+
       header.site {
         position: sticky; top: 0; z-index: 50;
         background: rgba(255, 255, 255, 0.62);
@@ -139,9 +152,61 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
       .lang-pill a { padding: 5px 11px; border-radius: 999px; color: var(--muted); letter-spacing: 0.06em; }
       .lang-pill a.active { background: var(--ink); color: var(--paper); }
 
-      @media (max-width: 720px) {
-        header.site .bar { grid-template-columns: 1fr auto; gap: 12px; }
-        nav.primary { display: none; }
+      @media (max-width: 900px) {
+
+        header.site .bar {
+          grid-template-columns: auto 1fr auto;
+          align-items: center;
+        }
+
+        nav.primary {
+          display: none;
+        }
+
+        .menu-toggle {
+          display: block;
+        }
+
+        .brand {
+          justify-self: center;
+          text-align: center;
+        }
+
+        .mobile-menu {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          
+          max-height: 0;
+          padding: 0;
+          overflow: hidden;
+
+          transition:
+              max-height 0.5s ease,
+              padding 0.5s ease;
+        }
+
+        .mobile-menu.open {
+          max-height: 300px;
+          padding: 24px 0;
+          border-top: 1px solid var(--line);
+        }
+
+        .mobile-menu a {
+          font-size: 16px;
+
+          opacity: 0;
+          transform: translateY(-6px);
+
+          transition:
+            opacity 1.8s ease,
+            transform 1.8s ease;
+        }
+        .mobile-menu.open a {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       /* Buttons */
@@ -240,14 +305,16 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
     <!-- Header -->
     <header class="site">
       <div class="wrap bar">
-      <a class="brand" href={`/${lang}`}>        
-        {/*<img class="logo" src="/assets/logo/logo.png" alt="logo" /> */}
-        <div class="brand-text">
-          <span class="en">{site.brand[lang].primary}</span>
-          <span class="zh">{site.brand[lang].secondary}</span>
-        </div>
-      </a>
-
+        <button class="menu-toggle" aria-label="Menu">
+          ☰
+        </button>
+        <a class="brand" href={`/${lang}`}>        
+          {/*<img class="logo" src="/assets/logo/logo.png" alt="logo" /> */}
+          <div class="brand-text">
+            <span class="en">{site.brand[lang].primary}</span>
+            <span class="zh">{site.brand[lang].secondary}</span>
+          </div>
+        </a>
         <nav class="primary">
           {navItems.map((item) => (
             <a href={item.href} class={pathname === item.href ? "active" : ""}>{item.label}</a>
@@ -261,6 +328,14 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
           ))}
         </div>
       </div>
+
+        <div class="mobile-menu">
+          {navItems.map((item) => (
+            <a href={item.href}>
+              {item.label}
+            </a>
+          ))}
+        </div>
 
       <style is:global>
         .logo {
@@ -317,6 +392,14 @@ const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.u
     </footer>
     <script is:inline define:vars={{ lang }}>
       window.localStorage.setItem("stage4th-lang", lang);
+      document.addEventListener("DOMContentLoaded", () => {
+        const btn = document.querySelector(".menu-toggle");
+        const menu = document.querySelector(".mobile-menu");
+
+        btn?.addEventListener("click", () => {
+          menu?.classList.toggle("open");
+        });
+      });
     </script>
   </body>
 </html>
