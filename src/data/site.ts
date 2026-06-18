@@ -148,7 +148,7 @@ export const siteHero = {
 
 export const siteFeatured = {
   en: {
-    eyebrow: "Most recent production",
+    eyebrow: "Archive",
     tape: "ARCHIVE / 04·26",
     info: [
       ["Date", "Sun · April 26, 2026", "7:00 PM"],
@@ -160,7 +160,7 @@ export const siteFeatured = {
     ctaSecondary: "All events",
   },
   zh: {
-    eyebrow: "最近一次演出",
+    eyebrow: "过往演出",
     tape: "归档 / 04·26",
     info: [
       ["日期", "2026 年 4 月 26 日 · 周日", "晚 7:00"],

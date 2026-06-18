@@ -106,28 +106,22 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     <div class="wrap">
       <div class="head">
         <span class="eyebrow">{featured.eyebrow}</span>
-        <h2 class="display">{proofTitle}</h2>
       </div>
-      <div class="grid">
-        <a class="poster" href={`/${lang}/events/${proofSlug}`}>
-          <img src={proof.data.posterImage} alt={proofTitle} />
-          <span class="tape">{featured.tape}</span>
-        </a>
-        <div class="info">
-          {featured.info.map(([k, v, sub]) => (
-            <div class="row">
-              <span class="k">{k}</span>
-              <div class="v">
-                <strong>{v}</strong>
-                <span class="sub">{sub}</span>
-              </div>
-            </div>
-          ))}
-          <div class="cta-row">
-            <a class="btn" href={`/${lang}/events/${proofSlug}`}>{featured.cta} <span class="arr">→</span></a>
-            <a class="btn secondary" href={`/${lang}/events`}>{featured.ctaSecondary}</a>
-          </div>
-        </div>
+
+      <div class="poster-carousel">
+        {events.map((event) => (
+          <a
+            class="archive-poster"
+            href={`/${lang}/events/${eventSlug(event)}`}
+          >
+            <img
+              src={event.data.posterImage}
+              alt={lang === "en"
+                ? event.data.titleEn
+                : event.data.titleZh}
+            />
+          </a>
+        ))}
       </div>
     </div>
   </section>
@@ -169,7 +163,33 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
 
   .featured { padding: 60px 0; border-bottom: 1px solid var(--line); }
   .featured .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 64px; }
-  .featured h2 em { font-style: italic; }
+  .poster-carousel {
+    display: flex;
+    gap: 16px;
+
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+
+    padding-bottom: 12px;
+  }
+
+  .archive-poster {
+    flex: 0 0 260px;
+
+    aspect-ratio: 3 / 4;
+    scroll-snap-align: start;
+  }
+
+  .poster-carousel::-webkit-scrollbar {
+    display: none;
+  }
+
+  .archive-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
   .grid { 
     display: grid; 
     grid-template-columns: 1fr 1.25fr; 
@@ -178,8 +198,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     margin: 40px auto 0; 
     transform: none;
   }
-  .poster { position: relative; display: block; aspect-ratio: 3/4; max-height: 600px; margin-left: 0px; background: var(--paper-soft); overflow: hidden; }
-  .poster img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  
   .tape { position: absolute; top: 24px; left: -40px; transform: rotate(-8deg); background: var(--accent); color: var(--ink); font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; padding: 8px 56px; text-transform: uppercase; }
   .info .row { display: grid; grid-template-columns: 110px 1fr; gap: 32px; padding: 22px 0; border-bottom: 1px solid var(--line); align-items: start; }
   .info .row:first-of-type { border-top: 1px solid var(--line); }
@@ -205,6 +224,25 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
     .grid { grid-template-columns: 1fr; gap: 40px; transform: none;}
     .pillars { grid-template-columns: 1fr; }
     .upcoming-text { margin-top: 0; }
+
+    .poster-carousel {
+      scrollbar-width: thin;              /* Firefox */
+      scrollbar-color: var(--line) transparent;
+    }
+
+    .poster-carousel::-webkit-scrollbar {
+      display: block;
+      height: 4px;
+    }
+
+    .poster-carousel::-webkit-scrollbar-thumb {
+      background: var(--line);
+      border-radius: 999px;
+    }
+
+    .poster-carousel::-webkit-scrollbar-track {
+      background: transparent;
+    }
   }
 
 </style>
