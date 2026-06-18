@@ -20,12 +20,12 @@ const enCategories = [
     title: "Full Production",
   },
   {
-    key: "script-reading",
-    title: "Script Reading",
-  },
-  {
     key: "staged-reading",
     title: "Staged Reading",
+  },
+  {
+    key: "script-reading",
+    title: "Script Reading",
   },
   {
     key: "acting-workshop",
@@ -41,13 +41,13 @@ const cnCategories = [
     key: "full-production",
     title: "正式制作",
   },
-  {
-    key: "script-reading",
-    title: "剧本朗读",
-  },
   { 
     key: "staged-reading",
     title: "舞台围读",
+  },
+  {
+    key: "script-reading",
+    title: "剧本朗读",
   },
   {
     key: "acting-workshop",
@@ -63,18 +63,8 @@ const categories = lang === "zh" ? cnCategories : enCategories;
 <BaseLayout lang={lang} title={`${t.eventsTitle} | ${site.brand[lang].primary}`} description={t.eventsIntro}>
   <section class="head">
     <div class="wrap">
-      <span class="eyebrow">{e.eyebrow}</span>
-      <h1 class="display">{e.titleLead} <em>{e.titleEm}</em></h1>
-      <p class="lead">{e.lead}</p>
-    </div>
-  </section>
+      <h1 class="display">{e.titleLead} </h1>
 
-  <section class="list-section">
-    <div class="wrap">
-      <div class="section-label">
-        <span class="eyebrow">{e.sectionUpcoming}</span>
-        <span class="count">[{String(upcoming.length).padStart(2, "0")}]</span>
-      </div>
       {upcoming.length === 0 ? (
         <div class="empty">{e.empty}</div>
       ) : (
@@ -102,7 +92,7 @@ const categories = lang === "zh" ? cnCategories : enCategories;
   <section class="list-section">
     <div class="wrap">
       <div class="section-label">
-        <span class="eyebrow">{e.sectionPast}</span>
+        <h1 class="display">{e.sectionPast} </h1>
         <span class="count">[{String(past.length).padStart(2, "0")}]</span>
       </div>
       <ol class="rows">
@@ -172,7 +162,7 @@ const categories = lang === "zh" ? cnCategories : enCategories;
   h1.display em { font-style: italic; color: var(--ink-soft); }
   .lead { font-size: 16px; line-height: 1.7; color: var(--ink-soft); max-width: 1100px; }
 
-  .list-section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+  .list-section { padding: 40px 0; border-bottom: 1px solid var(--line); }
   .section-label { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 32px; }
   .section-label .count { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
 

@@ -14,35 +14,8 @@ const hero = siteHero[lang];
 ---
 <BaseLayout lang={lang} title={`${t.aboutTitle} | ${site.brand[lang].primary}`} description={paragraphs[0]}>
 
-  <!-- HERO -->
-  <section class="hero">
-    <div class="wrap">
-      <ul class="meta">
-        {hero.meta.map(([k, v]) => (
-          <li><span class="k">{k}</span><span class="v">{v}</span></li>
-        ))}
-      </ul>
-      {/*
-      <div class="hero-title-wrap">
-        <h1 class="display">
-          {hero.title.map((line, i) => (
-            <span class={`l l${i + 1}`}>
-              {i === 1 ? <em>{line}</em> : i === hero.title.length - 1
-                ? <><span class="accent-word">{String(line).replace(/[.。]$/, "")}</span>{String(line).match(/[.。]$/)?.[0] ?? ""}</>
-                : line}
-            </span>
-          ))}
-        </h1>
-
-        <span class="cue">{hero.scrollCue}</span>
-      </div>
-       */}
-    </div>
-  </section>
-
   <section class="about">
     <div class="wrap">
-      <span class="eyebrow">{lang === "en" ? "About Us" : "关于我们"}</span>
       <h1 class="display">{t.aboutTitle}</h1>
       <p class="pull">
         {about.pull.lead}<br/>
@@ -78,30 +51,9 @@ const hero = siteHero[lang];
 </BaseLayout>
 
 <style>
-  .hero { padding: 40px 0; }
-  .meta { list-style: none; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; padding-bottom: 40px; border-bottom: 1px solid var(--line); margin-bottom: 12px; }
-  .meta li { display: flex; flex-direction: column; gap: 6px; }
-  .meta .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
-  .meta .v { font-family: var(--serif); font-size: 22px; }
-  /* .hero-title-wrap { position: relative; } 
-  h1.display .l { display: block; }
-  h1.display .l2 { padding-left: 8vw; font-style: italic; color: var(--ink-soft); }
-  h1.display .l4 { padding-left: 4vw; }
-  h1.display em { font-style: italic; }
-  .cue {
-    position: absolute;
-    right: 0;
-    bottom: -50px;
-    font-family: var(--mono);
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--muted);
-  }*/
-
   .about { padding: 0px 0 40px; }
   .about .eyebrow { margin-bottom: 40px; }
-  h1.display { font-size: clamp(56px, 7vw, 112px); margin-bottom: 56px; }
+  h1.display { font-size: clamp(56px, 7vw, 112px); margin-top: 40px; margin-bottom: 56px; }
   .pull { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.2; font-style: italic; max-width: 1000px; padding-bottom: 64px; border-bottom: 1px solid var(--line); }
   .body-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; align-items: start; }
   .copy p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 18px; }

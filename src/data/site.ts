@@ -34,7 +34,7 @@ export const nav = {
     { label: "Home", href: "/en" },
     { label: "About", href: "/en/about" },
     { label: "Events", href: "/en/events" },
-    { label: "Contact", href: "/en/contact" },
+    { label: "Contact Us", href: "/en/contact" },
   ],
 };
 
@@ -78,7 +78,7 @@ export const copy = {
     aboutCta: "About Us",
     eventsCta: "View Events",
     followCta: "Follow Us",
-    aboutTitle: "About",
+    aboutTitle: "About Us",
     aboutBody:
       'Stage 4th Society is dedicated to dismantling the fourth wall — the imagined boundary between performers and audiences. We see theatre as a shared space where anyone can participate, express, and connect.\n\nThrough script readings, performances, workshops, and collaborative projects, we create participatory theatre experiences that invite people to explore themselves and connect with others.\n\nWhere the wall falls, connection begins.',
     fourthWallTitle: "What Is the Fourth Wall?",
@@ -195,15 +195,14 @@ export const siteAbout = {
 export const siteEvents = {
   en: {
     eyebrow: "Events / Archive",
-    titleLead: "Past, present, and",
-    titleEm: "what's next.",
+    titleLead: "Upcoming",
     lead: "Performances, readings, workshops, and collaborative projects — archived as they happen, organized by season.",
     sectionPast: "Archive",
     sectionUpcoming: "Upcoming",
     sections: {
       fullProduction: "Full Production",
-      scriptReading: "Script Reading",
       stagedReading: "Staged Reading",
+      scriptReading: "Script Reading",
       actingWorkshop: "Acting Workshop",
       meetup: "Meetup",
     },
@@ -211,15 +210,14 @@ export const siteEvents = {
   },
   zh: {
     eyebrow: "活动 / 归档",
-    titleLead: "过往、现在，以及",
-    titleEm: "正在到来的。",
+    titleLead: "即将到来",
     lead: "演出、围读、工作坊、共创项目——按时序归档，依季度整理。",
     sectionPast: "已结束",
     sectionUpcoming: "即将到来",
     sections: {
       fullProduction: "正式制作",
-      scriptReading: "剧本朗读",
       stagedReading: "剧本围读",
+      scriptReading: "剧本朗读",
       actingWorkshop: "表演工作坊",
       meetup: "交流活动",
     },
