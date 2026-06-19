@@ -16,11 +16,18 @@ import { site } from "../data/site";
     />
     
     <link rel="canonical" href={site.url} />
-    <script is:inline>
+    <script>
+      import { getLanguageRedirect } from "../lib/languageRedirect.mjs";
+
       const savedLang = window.localStorage.getItem("stage4th-lang");
       const browserLang = navigator.language || "";
-      const nextLang = savedLang || (browserLang.toLowerCase().startsWith("zh") ? "zh" : "en");
-      window.location.replace(`/${nextLang}`);
+      const destination = getLanguageRedirect({
+        savedLanguage: savedLang,
+        browserLanguage: browserLang,
+        search: window.location.search,
+      });
+
+      window.location.replace(destination);
     </script>
   </head>
 
