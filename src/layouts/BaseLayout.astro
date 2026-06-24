@@ -15,7 +15,7 @@ const ticker = siteTicker[lang];
 const footer = siteFooter[lang];
 const navItems = nav[lang];
 const canonical = new URL(`${pathname}/`.replace(/\/+$/, "/"), site.url).toString();
-const absoluteImage = new URL(image ?? "/assets/events/proof/banner.jpg", site.url).toString();
+const absoluteImage = new URL(image ?? "/assets/events/upcoming.jpg", site.url).toString();
 ---
 <!doctype html>
 <html lang={lang === "zh" ? "zh-Hans" : "en"}>

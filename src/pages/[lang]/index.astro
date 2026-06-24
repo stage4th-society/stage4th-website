@@ -17,7 +17,7 @@ const events = await getCollection("events");
 const proof = events.find((e) => eventSlug(e) === "proof-2026-04-26") ?? events[0];
 const proofSlug = eventSlug(proof);
 const proofTitle = lang === "zh" ? proof.data.titleZh : proof.data.titleEn;
-const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
+const title = `${site.brand[lang].primary}`;
 ---
 
 <BaseLayout lang={lang} title={title} description={t.homeIntro}>
@@ -85,7 +85,7 @@ const title = `${site.brand[lang].primary} — ${t.homeTitle}`;
             </strong>
 
             <br />
-            <strong>3:30 p.m. - 5:30 p.m. &nbsp;&nbsp;&nbsp;and&nbsp;&nbsp;&nbsp; 7:30 p.m. - 9:30 p.m.</strong>
+            <strong>3:30 p.m. - 5:30 p.m.<br>7:30 p.m. - 9:30 p.m.</strong>
           </p>
 
           <a
