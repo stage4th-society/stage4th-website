@@ -39,12 +39,38 @@ const hero = siteHero[lang];
           </article>
         ))}
       </div>
+
       <div class="fourth-wall">
         <div>
           <span class="eyebrow">Fourth Wall</span>
           <h2 class="display">{t.fourthWallTitle}</h2>
         </div>
         <p>{t.fourthWallBody}</p>
+      </div>
+
+      <div class="legal">
+        <span class="eyebrow">
+          {lang === "en" ? "Legal Information" : "注册信息"}
+        </span>
+
+        <div class="legal-content">
+          <p>
+            <strong>
+              {lang === "en"
+                ? "Registration ID"
+                : "注册号码"}
+            </strong>
+            S0083227
+          </p>
+          <p>
+            <strong>
+              {lang === "en"
+                ? "Registered Office"
+                : "注册地址"}
+            </strong>
+            9-561 shaw ave, Vancouver, BC, Canada, V3K 2R2
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -70,5 +96,39 @@ const hero = siteHero[lang];
   .fourth-wall p { margin-top: 70px; font-size: 16px; line-height: 1.75; color: var(--ink-soft); }
   @media (max-width: 900px) {
     .body-grid, .pillars, .fourth-wall { grid-template-columns: 1fr; gap: 40px; }
+  }
+  .legal {
+    margin-top: 80px;
+    padding-top: 56px;
+    border-top: 1px solid var(--line);
+  }
+
+  .legal-content {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(260px, 1fr));
+    gap: 40px;
+  }
+
+  .legal-content p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+  }
+
+  .legal-content strong {
+    display: block;
+    margin-bottom: 8px;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .legal-content {
+      grid-template-columns: 1fr;
+    }
   }
 </style>

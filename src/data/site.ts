@@ -304,7 +304,7 @@ export const siteFooter = {
       { h: "Reach", items: [["Email", "mailto:vancouver.fwd@gmail.com"], ["Instagram", "https://www.instagram.com/vanfwd"], ["RedNote", "http://xhslink.com/m/7VOFBgRY4ym"], ["WeChat: van_fwd", "#"]] },
       { h: "Latest", items: [["Proof / 求证", "/en/events/proof-2026-04-26"], ["Archive", "/en/events"]] },
     ],
-    meta: ["© Stage 4th Society 2026", "Vancouver, BC, Canada", "Built with Astro · Cloudflare Pages"],
+    meta: ["© Stage 4th Society 2026", "Registered ID: S0083227", "Registered Office: 9-561 shaw ave, V3K 2R2", "Vancouver, BC, Canada", "Built with Astro · Cloudflare Pages"],
   },
   zh: {
     markLead: "墙倒下的地方，",
