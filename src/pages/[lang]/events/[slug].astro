@@ -52,7 +52,9 @@ const jsonLd = {
       <h1 class="display"><em>{titleFirst}</em>{titleRest && <>{" "}{titleRest}</>}</h1>
       <p class="sub">{subtitle}</p>
       <div class="cta-row">
-        <a class="btn" href="#program">{t.viewProgram} <span class="arr">→</span></a>
+        {data.programFiles?.length > 0 && (
+          <a class="btn" href="#program">{t.viewProgram} <span class="arr">→</span></a>
+        )}
         <a class="btn ghost" href={`/${lang}/contact`}>{t.followCta}</a>
       </div>
     </div>
@@ -97,24 +99,26 @@ const jsonLd = {
   </section>
 
   <!-- PROGRAM CTA -->
-  <section id="program" class="program-cta">
-    <div class="wrap">
-      <span class="eyebrow inverse">{t.program}</span>
-      <h2 class="display">{t.viewProgram}</h2>
-      <div class="program-grid">
-        {data.programFiles.map((f, i) => {
-          const roman = ["I", "II", "III", "IV", "V", "VI"][i] ?? String(i + 1);
-          return (
-            <a href={f.url} target="_blank" rel="noreferrer" class="prog-tile">
-              <span class="roman">{roman}</span>
-              <span class="lbl">{f.label}</span>
-              <span class="arr">↗</span>
-            </a>
-          );
-        })}
+  {data.programFiles?.length > 0 && (
+    <section id="program" class="program-cta">
+      <div class="wrap">
+        <span class="eyebrow inverse">{t.program}</span>
+        <h2 class="display">{t.viewProgram}</h2>
+        <div class="program-grid">
+          {data.programFiles.map((f, i) => {
+            const roman = ["I", "II", "III", "IV", "V", "VI"][i] ?? String(i + 1);
+            return (
+              <a href={f.url} target="_blank" rel="noreferrer" class="prog-tile">
+                <span class="roman">{roman}</span>
+                <span class="lbl">{f.label}</span>
+                <span class="arr">↗</span>
+              </a>
+            );
+          })}
+        </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 </BaseLayout>
 
 <style>
