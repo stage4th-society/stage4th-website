@@ -39,23 +39,23 @@ const title = `${site.brand[lang].primary}`;
         <div class="upcoming-text">
           <h2 class="display">
             <em>
-              {lang === "en" ? "The Weight of Small Things" : "小事之重"}
+              {lang === "en" ? "The Weight of Small Things Vol. 2" : "小事之重 2"}
             </em>
           </h2>
 
           <p>
             {lang === "en" ? (
               <>
-                Some plays were written long ago, but they have never truly left the stage. 
-                Across different times and cultures, these works continue to speak to questions 
-                that feel familiar today: relationships, identity, freedom, social expectations, 
-                and the choices people make under pressure.<br><br>
+                Stage 4th Society's staged-reading series returns with a new pairing of short plays, 
+                bringing together two stories about the lives we are expected to lead and 
+                the courage it takes to imagine another path.<br><br>
 
-                The first reading, <strong>The Weight of Small Things</strong>,
-                brings together Susan Glaspell's <em>Suppressed Desires</em> and <em>Trifles</em>
-                — two early modern one-act plays in conversation.
-                One uses sharp satire to expose the absurdity of over-analysis;
-                the other builds quiet tension around what is overlooked, unheard, and left unsaid.<br><br>
+                J. M. Barrie's <strong><em>The Twelve-Pound Look</em></strong> (1910), localized, adapted, and directed by Calandya Zhang, 
+                follows a seemingly successful household unsettled by the unexpected return of a woman who once chose independence over comfort. <br><br>
+                
+                George Middleton's <strong><em>Tradition</em></strong> (1913), directed by Wendy Chi Wen-Chieh, 
+                brings questions of family, duty, ambition, and personal freedom quietly to the 
+                surface as one generation confronts the choices of another.<br><br>
 
                 Presented in Mandarin with English subtitles, 
                 this staged reading invites audiences across languages to rediscover 
@@ -63,16 +63,18 @@ const title = `${site.brand[lang].primary}`;
               </>
             ) : (
               <>
-                有些剧本写在很久以前，却从未真正离开舞台。跨越不同的时代与文化，
-                这些作品依然回应着今天我们熟悉的问题：关系、身份、自由、社会期待，以及人在压力之下作出的选择。<br><br>
+                Stage 4th Society 舞台朗读系列带着两部全新的短剧再次回归。
+                两部作品共同讲述那些我们被期待去过的人生，以及想象另一种可能所需要的勇气。<br><br>
 
-                首场朗读《小事之重》将呈现苏珊·格拉斯佩尔的两部独幕剧：《压抑的欲望》与《琐事》。
-                这两部早期现代短剧彼此呼应：一部以犀利的讽刺揭示过度分析的荒诞，
-                另一部则在安静的张力中展开那些被忽略、未被听见、也未曾说出口的事。<br><br>
+                J. M. Barrie 创作于 1910 年的<strong>《十二英镑》</strong>，由 Calandya Zhang 进行本土化改编并执导。
+                故事从一个看似成功而体面的家庭展开，一位曾经为了独立而离开安稳生活的女性意外归来，也打破了原有的平静。<br><br>
 
-                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。<br><br>
+                George Middleton 创作于 1913 年的<strong>《传统》</strong>，由 Wendy Chi 执导。
+                作品以克制而细腻的方式，让家庭责任、个人理想、世代期待与自由选择之间的矛盾逐渐浮现，
+                也让不同世代不得不重新面对彼此所作出的选择。<br><br>
+
+                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。
                 
-                欢迎加入这场关于重新发现、反思与对话的读剧体验！
               </>
             )}
           </p>
@@ -80,12 +82,12 @@ const title = `${site.brand[lang].primary}`;
           <p>
             <strong>
               {lang === "en"
-                ? "Sat, Jul 4 · Sat, Jul 11"
-                : "7月4日 和 7月11日 (双周六)"}
+                ? "Sat, Sep 5 · Sun, Sep 20"
+                : "9月5日 (周六) 和 9月20日 (周日)"}
             </strong>
 
             <br />
-            <strong>3:30 p.m. - 5:30 p.m.<br>7:30 p.m. - 9:30 p.m.</strong>
+            <strong>3:30 p.m. - 5:30 p.m.<br>7:00 p.m. - 9:00 p.m.</strong>
           </p>
 
           <a
@@ -161,7 +163,7 @@ const title = `${site.brand[lang].primary}`;
 <style>
   .upcoming { padding: 40px 0; border-bottom: 1px solid var(--line); }
   .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
-  .upcoming h2 em { font-family: "Inter", sans-serif; font-size: clamp(34px, 5vw, 45px); font-style: normal; line-height: 1.15; }
+  .upcoming h2 em { font-family: "Inter", sans-serif; font-size: clamp(30px, 4.2vw, 38px); font-style: normal; line-height: 1.15; }
   .upcoming-image { aspect-ratio: 3 / 4; max-height: 600px; margin-left: 0px; overflow: hidden; background: var(--paper-soft); }
   .upcoming-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .upcoming-text { display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin-top: -20px; }

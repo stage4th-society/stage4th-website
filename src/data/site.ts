@@ -9,8 +9,8 @@ export const site = {
   xiaohongshu: "http://xhslink.com/m/7VOFBgRY4ym",
   wechatId: "van_fwd",
   logo: "/assets/logo/logo.png",
-  upcoming: "/assets/events/upcoming.jpg",
-  soding_link: "https://www.zeffy.com/en-CA/ticketing/staged-reading-series",
+  upcoming: "/assets/events/upcoming.png",
+  soding_link: "https://www.zeffy.com/en-CA/ticketing/staged-reading-series-the-weight-of-small-things-vol--2",
   past: "/assets/events/proof/poster.png",
   xhsQr: "/assets/social/xhs-qr.png",
   brand: {
