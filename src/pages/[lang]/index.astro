@@ -59,7 +59,10 @@ const title = `${site.brand[lang].primary}`;
 
                 Presented in Mandarin with English subtitles, 
                 this staged reading invites audiences across languages to rediscover 
-                these classic short plays in a contemporary context.
+                these classic short plays in a contemporary context.<br><br>
+
+                <strong>Sat, Sep 5 at 3:30 p.m. & 7:00 p.m.</strong><br>
+                <strong>Sun, Sep 20 at 3:30 p.m. & 7:00 p.m.</strong>
               </>
             ) : (
               <>
@@ -73,21 +76,12 @@ const title = `${site.brand[lang].primary}`;
                 作品以克制而细腻的方式，让家庭责任、个人理想、世代期待与自由选择之间的矛盾逐渐浮现，
                 也让不同世代不得不重新面对彼此所作出的选择。<br><br>
 
-                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。
+                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。<br><br>
                 
+                <strong>9月5日 (周六) 下午场 3:30 | 晚场 7:00</strong><br>
+                <strong>9月20日 (周日) 下午场 3:30 | 晚场 7:00</strong>                
               </>
             )}
-          </p>
-
-          <p>
-            <strong>
-              {lang === "en"
-                ? "Sat, Sep 5 · Sun, Sep 20"
-                : "9月5日 (周六) 和 9月20日 (周日)"}
-            </strong>
-
-            <br />
-            <strong>3:30 p.m. - 5:30 p.m.<br>7:00 p.m. - 9:00 p.m.</strong>
           </p>
 
           <a
@@ -164,7 +158,7 @@ const title = `${site.brand[lang].primary}`;
   .upcoming { padding: 40px 0; border-bottom: 1px solid var(--line); }
   .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
   .upcoming h2 em { font-family: "Inter", sans-serif; font-size: clamp(28px, 4vw, 36px); font-style: normal; line-height: 1.15; }
-  .upcoming-image { aspect-ratio: 3 / 4; max-height: 600px; margin-left: 0px; overflow: hidden; background: var(--paper-soft); }
+  .upcoming-image { aspect-ratio: 3 / 4; max-height: 800px; width: 100%; overflow: hidden; background: var(--paper-soft); }
   .upcoming-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .upcoming-text { display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin-top: -20px; }
   .upcoming-text p { font-size: 16px; line-height: 1.8; color: var(--ink-soft); }
@@ -209,7 +203,7 @@ const title = `${site.brand[lang].primary}`;
     display: grid; 
     grid-template-columns: 1fr 1.25fr; 
     gap: 64px; 
-    max-width: 1100px; 
+    padding-right: 100px;
     margin: 40px auto 0; 
     transform: none;
   }
@@ -232,14 +226,19 @@ const title = `${site.brand[lang].primary}`;
   .pillars h3 { font-family: var(--serif); font-weight: 500; font-size: 28px; }
   .pillars p { font-size: 14px; line-height: 1.6; color: var(--ink-soft); }
 
+  
   @media (max-width: 900px) {
     .meta { grid-template-columns: repeat(2, 1fr); gap: 24px; }
     h1.display .l { padding-left: 0 !important; }
     .lead-row { grid-template-columns: 1fr; gap: 24px; }
-    .grid { grid-template-columns: 1fr; gap: 40px; transform: none;}
+    .grid { grid-template-columns: 1fr; gap: 40px; padding-right: 0; transform: none;}
     .pillars { grid-template-columns: 1fr; }
     .upcoming-text { margin-top: 0; }
     .upcoming h2 em { font-size: clamp(24px, 3.5vw, 32px); }
+    .upcoming-image { 
+      max-width: 600px;
+      margin: 0 auto;
+    }
 
     .poster-carousel {
       scrollbar-width: thin;              /* Firefox */
