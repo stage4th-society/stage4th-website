@@ -67,6 +67,8 @@ export const copy = {
     organizer: "主办方",
     past: "已结束",
     upcoming: "即将到来",
+    active: "进行中",
+    cancelled: "已取消",
     social: "社交媒体",
   },
   en: {
@@ -96,6 +98,8 @@ export const copy = {
     organizer: "Organizer",
     past: "Past",
     upcoming: "Upcoming",
+    active: "Now Running",
+    cancelled: "Cancelled",
     social: "Social",
   },
 };

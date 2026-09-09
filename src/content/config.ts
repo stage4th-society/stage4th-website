@@ -10,6 +10,10 @@ const events = defineCollection({
     subtitleZh: z.string(),
     subtitleEn: z.string(),
     dateTime: z.string(),
+    // ISO 8601. Date-only is fine for a multi-performance run; a full
+    // datetime is used where the copy states one unambiguous curtain time.
+    startDate: z.string(),
+    endDate: z.string().optional(),
     venue: z.object({
       name: z.string(),
       address: z.string(),

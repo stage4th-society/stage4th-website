@@ -27,14 +27,45 @@ const description = lang === "zh" ? data.descriptionZh : data.descriptionEn;
 const playwright = lang === "zh" ? data.playwrightZh : data.playwrightEn;
 const seoTitle = lang === "zh" ? data.seoTitleZh : data.seoTitleEn;
 const seoDescription = lang === "zh" ? data.seoDescriptionZh : data.seoDescriptionEn;
+const statusLabel = {
+  upcoming: t.upcoming,
+  active: t.active,
+  past: t.past,
+  cancelled: t.cancelled,
+}[data.status];
+
+// schema.org's EventStatusType has no "completed" member — a past event stays
+// EventScheduled, and the date is what tells Google it is over.
+const eventStatus =
+  data.status === "cancelled"
+    ? "https://schema.org/EventCancelled"
+    : "https://schema.org/EventScheduled";
+
+// venue.city packs locality, region, and postal code into one display string.
+const [addressLocality, addressRegion, postalCode] = data.venue.city
+  .split(",")
+  .map((part) => part.trim());
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "TheaterEvent",
   name: title,
-  startDate: "2026-04-26T19:00:00-07:00",
-  eventStatus: "https://schema.org/EventCompleted",
+  startDate: data.startDate,
+  ...(data.endDate ? { endDate: data.endDate } : {}),
+  eventStatus,
   eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-  location: { "@type": "Place", name: data.venue.name, address: { "@type": "PostalAddress", streetAddress: data.venue.address, addressLocality: "Vancouver", addressRegion: "BC", postalCode: "V6H 3S2", addressCountry: "CA" } },
+  location: {
+    "@type": "Place",
+    name: data.venue.name,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: data.venue.address,
+      addressLocality,
+      addressRegion,
+      ...(postalCode ? { postalCode } : {}),
+      addressCountry: "CA",
+    },
+  },
   image: new URL(data.bannerImage, site.url).toString(),
   organizer: { "@type": "Organization", name: "Stage 4th Society", url: site.url },
   description: seoDescription,
@@ -48,7 +79,7 @@ const jsonLd = {
     <img class="bg" src={data.bannerImage} alt={title} />
     <div class="overlay"></div>
     <div class="wrap content">
-      <span class="eyebrow accent">{t.past}</span>
+      <span class="eyebrow accent">{statusLabel}</span>
       <h1 class="display"><em>{titleFirst}</em>{titleRest && <>{" "}{titleRest}</>}</h1>
       <p class="sub">{subtitle}</p>
       <div class="cta-row">
