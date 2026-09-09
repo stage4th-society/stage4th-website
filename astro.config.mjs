@@ -4,7 +4,7 @@ import sitemap from "@astrojs/sitemap";
 import cloudflare from "@astrojs/cloudflare";
 
 export default defineConfig({
-  site: "https://stage4th-website.vancouver-fwd.workers.dev",
+  site: "https://stage4theatre.com",
   integrations: [sitemap()],
   adapter: cloudflare()
 });
