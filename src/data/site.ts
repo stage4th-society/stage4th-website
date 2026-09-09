@@ -9,8 +9,6 @@ export const site = {
   xiaohongshu: "http://xhslink.com/m/7VOFBgRY4ym",
   wechatId: "van_fwd",
   logo: "/assets/logo/logo.png",
-  upcoming: "/assets/events/upcoming.png",
-  soding_link: "https://www.zeffy.com/en-CA/ticketing/staged-reading-series-the-weight-of-small-things-vol--2",
   past: "/assets/events/proof/poster.png",
   xhsQr: "/assets/social/xhs-qr.png",
   brand: {
@@ -147,6 +145,22 @@ export const siteHero = {
     lead:
       "第四面墙拆除队是一个活跃于温哥华的非营利戏剧组织。我们通过剧本围读、舞台演出、工作坊与共创项目，连接舞台与现实、表演者与观众。",
     scrollCue: "向下浏览 · scroll",
+  },
+};
+
+// Section chrome for the homepage's featured-upcoming block. The event itself
+// (title, poster, copy, showtimes, ticket link) comes from the content
+// collection; only the programme name and labels live here.
+export const siteUpcoming = {
+  en: {
+    eyebrow: "Upcoming Event",
+    heading: "Staged Reading Series",
+    cta: "Reserve Tickets",
+  },
+  zh: {
+    eyebrow: "活动预告",
+    heading: "剧本朗读",
+    cta: "预约购票",
   },
 };
 

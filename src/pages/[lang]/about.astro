@@ -1,4 +1,6 @@
 ---
+import { getCollection } from "astro:content";
+import { upcomingEvent } from "../../data/events";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { copy, languages, siteHero, siteAbout, site, type Lang } from "../../data/site";
 
@@ -11,6 +13,7 @@ const t = copy[lang];
 const about = siteAbout[lang];
 const paragraphs = t.aboutBody.split("\n\n");
 const hero = siteHero[lang];
+const upcoming = upcomingEvent(await getCollection("events"));
 ---
 <BaseLayout lang={lang} title={`${t.aboutTitle} | ${site.brand[lang].primary}`} description={paragraphs[0]}>
 
@@ -26,7 +29,12 @@ const hero = siteHero[lang];
           {paragraphs.map((p) => <p>{p}</p>)}
         </div>
         <div class="upcoming-image">
-           <img src={site.upcoming} alt="Staged Reading Series" />
+           {upcoming && (
+             <img
+               src={upcoming.data.posterImage}
+               alt={lang === "zh" ? upcoming.data.titleZh : upcoming.data.titleEn}
+             />
+           )}
            <img src={site.past} alt="past event" />
         </div>
       </div>

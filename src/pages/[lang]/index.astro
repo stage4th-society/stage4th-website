@@ -1,8 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import { eventSlug } from "../../data/events";
+import { eventSlug, upcomingEvent } from "../../data/events";
+import { inlineTokens } from "../../lib/inlineEmphasis.mjs";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { copy, languages, siteHero, siteFeatured, siteAbout, site, type Lang } from "../../data/site";
+import { copy, languages, siteHero, siteFeatured, siteAbout, siteUpcoming, site, type Lang } from "../../data/site";
 
 export function getStaticPaths() {
   return languages.map((lang) => ({ params: { lang } }));
@@ -13,10 +14,16 @@ const t = copy[lang];
 const hero = siteHero[lang];
 const featured = siteFeatured[lang];
 const about = siteAbout[lang];
+const u = siteUpcoming[lang];
 const events = await getCollection("events");
-const proof = events.find((e) => eventSlug(e) === "proof-2026-04-26") ?? events[0];
-const proofSlug = eventSlug(proof);
-const proofTitle = lang === "zh" ? proof.data.titleZh : proof.data.titleEn;
+
+// Everything this block shows comes from the featured event's markdown, so
+// announcing a new show is a one-file change.
+const upcoming = upcomingEvent(events);
+
+const upcomingTitle = upcoming && (lang === "zh" ? upcoming.data.titleZh : upcoming.data.titleEn);
+const excerpt = upcoming && (lang === "zh" ? upcoming.data.homeExcerptZh : upcoming.data.homeExcerptEn);
+const showtimes = (upcoming && (lang === "zh" ? upcoming.data.showtimesZh : upcoming.data.showtimesEn)) ?? [];
 const title = `${site.brand[lang].primary}`;
 ---
 
@@ -24,78 +31,58 @@ const title = `${site.brand[lang].primary}`;
   
 
   <!-- UPCOMING -->
-  <section class="upcoming">
-    <div class="wrap">
-      <div class="head">
-        <span class="eyebrow">{lang === "en" ? "Upcoming Event" : "活动预告"}</span>
-        <h2 class="display">{lang === "en" ? "Staged Reading Series" : "剧本朗读"}</h2>
-      </div>
-
-      <div class="grid">
-        <div class="upcoming-image">
-          <img src={site.upcoming} alt="Staged Reading Series" />
+  {upcoming && excerpt && (
+    <section class="upcoming">
+      <div class="wrap">
+        <div class="head">
+          <span class="eyebrow">{u.eyebrow}</span>
+          <h2 class="display">{u.heading}</h2>
         </div>
 
-        <div class="upcoming-text">
-          <h2 class="display">
-            <em>
-              {lang === "en" ? "The Weight of Small Things Vol. 2" : "小事之重 2"}
-            </em>
-          </h2>
+        <div class="grid">
+          <div class="upcoming-image">
+            <img src={upcoming.data.posterImage} alt={upcomingTitle} />
+          </div>
 
-          <p>
-            {lang === "en" ? (
-              <>
-                Stage 4th Society's staged-reading series returns with a new pairing of short plays, 
-                bringing together two stories about the lives we are expected to lead and 
-                the courage it takes to imagine another path.<br><br>
+          <div class="upcoming-text">
+            <h2 class="display"><em>{upcomingTitle}</em></h2>
 
-                J. M. Barrie's <strong><em>The Twelve-Pound Look</em></strong> (1910), localized, adapted, and directed by Calandya Zhang, 
-                follows a seemingly successful household unsettled by the unexpected return of a woman who once chose independence over comfort. <br><br>
-                
-                George Middleton's <strong><em>Tradition</em></strong> (1913), directed by Wendy Chi Wen-Chieh, 
-                brings questions of family, duty, ambition, and personal freedom quietly to the 
-                surface as one generation confronts the choices of another.<br><br>
+            {/* One paragraph separated by <br><br>, matching the spacing this
+                block has always had — .upcoming-text is a 32px-gap flex column,
+                so splitting into real <p> elements would change the rhythm. */}
+            <p>
+              {excerpt.split("\n\n").map((para, i) => (
+                <>
+                  {i > 0 && <><br /><br /></>}
+                  {inlineTokens(para).map((tok) =>
+                    tok.bold && tok.italic ? <strong><em>{tok.text}</em></strong>
+                    : tok.bold ? <strong>{tok.text}</strong>
+                    : tok.italic ? <em>{tok.text}</em>
+                    : tok.text,
+                  )}
+                </>
+              ))}
+              {showtimes.length > 0 && <><br /><br /></>}
+              {showtimes.map((line, i) => (
+                <>{i > 0 && <br />}<strong>{line}</strong></>
+              ))}
+            </p>
 
-                Presented in Mandarin with English subtitles, 
-                this staged reading invites audiences across languages to rediscover 
-                these classic short plays in a contemporary context.<br><br>
-
-                <strong>Sat, Sep 5 at 3:30 p.m. & 7:00 p.m.</strong><br>
-                <strong>Sun, Sep 20 at 3:30 p.m. & 7:00 p.m.</strong>
-              </>
-            ) : (
-              <>
-                Stage 4th Society 舞台朗读系列带着两部全新的短剧再次回归。
-                两部作品共同讲述那些我们被期待去过的人生，以及想象另一种可能所需要的勇气。<br><br>
-
-                J. M. Barrie 创作于 1910 年的<strong>《十二镑的神情》</strong>，由 Calandya Zhang 进行本土化改编并执导。
-                故事从一个看似成功而体面的家庭展开，一位曾经为了独立而离开安稳生活的女性意外归来，也打破了原有的平静。<br><br>
-
-                George Middleton 创作于 1913 年的<strong>《传统》</strong>，由 Wendy Chi 执导。
-                作品以克制而细腻的方式，让家庭责任、个人理想、世代期待与自由选择之间的矛盾逐渐浮现，
-                也让不同世代不得不重新面对彼此所作出的选择。<br><br>
-
-                本次剧本朗读以普通话呈现，并配有英文字幕，邀请不同语言背景的观众在当代语境中重新发现这些经典短剧。<br><br>
-                
-                <strong>9月5日 (周六) 下午场 3:30 | 晚场 7:00</strong><br>
-                <strong>9月20日 (周日) 下午场 3:30 | 晚场 7:00</strong>                
-              </>
+            {upcoming.data.ticketUrl && (
+              <a
+                class="btn"
+                href={upcoming.data.ticketUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {u.cta} <span class="arr">→</span>
+              </a>
             )}
-          </p>
-
-          <a
-            class="btn"
-            href={site.soding_link}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {lang === "en" ? "Reserve Tickets" : "预约购票"} <span class="arr">→</span>
-          </a>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
+  )}
 
 
   <!-- FEATURED -->

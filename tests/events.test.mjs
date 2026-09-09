@@ -44,3 +44,23 @@ test("startDate and endDate are valid ISO 8601 and ordered", () => {
     }
   }
 });
+
+// The homepage renders whichever event is upcoming. Without these fields the
+// block silently disappears, which is worse than a failing build.
+test("an upcoming event carries the fields the homepage needs", () => {
+  const required = [
+    "homeExcerptZh",
+    "homeExcerptEn",
+    "showtimesZh",
+    "showtimesEn",
+    "ticketUrl",
+  ];
+
+  for (const { name } of events) {
+    const body = readFileSync(join(eventsDir, name), "utf8");
+    if (!/^status:\s*(upcoming|active)\s*$/m.test(body)) continue;
+
+    const missing = required.filter((key) => !new RegExp(`^${key}:`, "m").test(body));
+    assert.deepEqual(missing, [], `${name} is upcoming but has no ${missing.join(", ")}`);
+  }
+});

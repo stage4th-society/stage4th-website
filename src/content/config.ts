@@ -14,6 +14,14 @@ const events = defineCollection({
     // datetime is used where the copy states one unambiguous curtain time.
     startDate: z.string(),
     endDate: z.string().optional(),
+    // Homepage-only fields. The excerpt is a deliberately shorter edit of
+    // description*, and supports **bold** for inline emphasis. Only an
+    // event the homepage features needs them.
+    homeExcerptZh: z.string().optional(),
+    homeExcerptEn: z.string().optional(),
+    showtimesZh: z.array(z.string()).optional(),
+    showtimesEn: z.array(z.string()).optional(),
+    ticketUrl: z.string().optional(),
     venue: z.object({
       name: z.string(),
       address: z.string(),

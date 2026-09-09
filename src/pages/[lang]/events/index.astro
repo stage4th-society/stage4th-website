@@ -74,7 +74,7 @@ const categories = lang === "zh" ? cnCategories : enCategories;
             const title = lang === "zh" ? ev.data.titleZh : ev.data.titleEn;
             return (
               <li>
-                <a class="row" href={site.soding_link}>
+                <a class="row" href={ev.data.ticketUrl ?? `/${lang}/events/${slug}`}>
                   <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
                   <span class="title"><em>{title}</em></span>
                   <span class="meta">{ev.data.dateTime}</span>
