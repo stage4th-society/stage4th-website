@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import { eventSlug, upcomingEvent } from "../../data/events";
 import { inlineTokens } from "../../lib/inlineEmphasis.mjs";
+import { remainingShowtimes, vancouverToday } from "../../lib/eventFreshness.mjs";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { copy, languages, siteHero, siteFeatured, siteAbout, siteUpcoming, site, type Lang } from "../../data/site";
 
@@ -23,7 +24,9 @@ const upcoming = upcomingEvent(events);
 
 const upcomingTitle = upcoming && (lang === "zh" ? upcoming.data.titleZh : upcoming.data.titleEn);
 const excerpt = upcoming && (lang === "zh" ? upcoming.data.homeExcerptZh : upcoming.data.homeExcerptEn);
-const showtimes = (upcoming && (lang === "zh" ? upcoming.data.showtimesZh : upcoming.data.showtimesEn)) ?? [];
+// Filtered here so a visitor with no JavaScript still sees a truthful list;
+// the browser filters again for dates that passed after this build ran.
+const showtimes = remainingShowtimes(upcoming?.data.showtimes, vancouverToday());
 const title = `${site.brand[lang].primary}`;
 ---
 
@@ -63,8 +66,10 @@ const title = `${site.brand[lang].primary}`;
                 </>
               ))}
               {showtimes.length > 0 && <><br /><br /></>}
-              {showtimes.map((line, i) => (
-                <>{i > 0 && <br />}<strong>{line}</strong></>
+              {showtimes.map((slot, i) => (
+                <span data-showtime={slot.date}>
+                  {i > 0 && <br />}<strong>{lang === "zh" ? slot.zh : slot.en}</strong>
+                </span>
               ))}
             </p>
 

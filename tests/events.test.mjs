@@ -4,6 +4,8 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { isPastDate, vancouverToday } from "../src/lib/eventFreshness.mjs";
+
 const eventsDir = fileURLToPath(new URL("../src/content/events", import.meta.url));
 
 const events = readdirSync(eventsDir)
@@ -51,8 +53,7 @@ test("an upcoming event carries the fields the homepage needs", () => {
   const required = [
     "homeExcerptZh",
     "homeExcerptEn",
-    "showtimesZh",
-    "showtimesEn",
+    "showtimes",
     "ticketUrl",
   ];
 
@@ -63,4 +64,22 @@ test("an upcoming event carries the fields the homepage needs", () => {
     const missing = required.filter((key) => !new RegExp(`^${key}:`, "m").test(body));
     assert.deepEqual(missing, [], `${name} is upcoming but has no ${missing.join(", ")}`);
   }
+});
+
+// The site is prerendered, so a stale `status` keeps advertising a finished
+// run until somebody notices. This test is the "somebody": it starts failing
+// the morning after the last performance, whether or not anyone deploys.
+test("no event still claims to be current after its last performance", () => {
+  const today = vancouverToday();
+  const stale = [];
+
+  for (const { name, startDate, endDate } of events) {
+    const body = readFileSync(join(eventsDir, name), "utf8");
+    if (!/^status:\s*(upcoming|active)\s*$/m.test(body)) continue;
+    if (isPastDate(endDate ?? startDate, today)) {
+      stale.push(`${name} (last date ${endDate ?? startDate}, today ${today}) — set status: past`);
+    }
+  }
+
+  assert.deepEqual(stale, [], `events left marked current:\n  ${stale.join("\n  ")}`);
 });

@@ -79,7 +79,11 @@ const jsonLd = {
     <img class="bg" src={data.bannerImage} alt={title} />
     <div class="overlay"></div>
     <div class="wrap content">
-      <span class="eyebrow accent">{statusLabel}</span>
+      <span
+        class="eyebrow accent"
+        data-event-end={data.endDate ?? data.startDate}
+        data-past-label={t.past}
+      >{statusLabel}</span>
       <h1 class="display"><em>{titleFirst}</em>{titleRest && <>{" "}{titleRest}</>}</h1>
       <p class="sub">{subtitle}</p>
       <div class="cta-row">

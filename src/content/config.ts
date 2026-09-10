@@ -19,8 +19,12 @@ const events = defineCollection({
     // event the homepage features needs them.
     homeExcerptZh: z.string().optional(),
     homeExcerptEn: z.string().optional(),
-    showtimesZh: z.array(z.string()).optional(),
-    showtimesEn: z.array(z.string()).optional(),
+    // One entry per performance date. The date is what lets the build and
+    // the browser both work out which showings are still ahead; zh and en
+    // share an entry because two parallel arrays drift in length and order.
+    showtimes: z
+      .array(z.object({ date: z.string(), zh: z.string(), en: z.string() }))
+      .optional(),
     ticketUrl: z.string().optional(),
     venue: z.object({
       name: z.string(),

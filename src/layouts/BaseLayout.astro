@@ -69,6 +69,7 @@ const absoluteImage = new URL(image ?? "/assets/og-default.jpg", site.url).toStr
         --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
       }
       * { box-sizing: border-box; margin: 0; padding: 0; }
+      [hidden] { display: none !important; }
       html { font-size: 16px; }
       body {
         background: var(--paper);
@@ -400,6 +401,30 @@ const absoluteImage = new URL(image ?? "/assets/og-default.jpg", site.url).toStr
           menu?.classList.toggle("open");
         });
       });
+    </script>
+
+    <script>
+      // The pages are prerendered, so every date judgement in the HTML is
+      // frozen at build time. Re-run the same helpers against the visitor's
+      // clock so a page served from cache since before a performance does not
+      // keep advertising it. Same module the build uses — two copies of this
+      // rule would drift, and the drift would be invisible until a show ended.
+      import { isPastDate, vancouverToday } from "../lib/eventFreshness.mjs";
+
+      const today = vancouverToday();
+
+      const showtimes = [...document.querySelectorAll<HTMLElement>("[data-showtime]")];
+      for (const el of showtimes) {
+        if (isPastDate(el.dataset.showtime, today)) el.hidden = true;
+      }
+      // The separator sits inside each entry, so whichever one is now first
+      // must not open with a line break.
+      const firstVisible = showtimes.find((el) => !el.hidden);
+      if (firstVisible) for (const br of firstVisible.querySelectorAll("br")) br.remove();
+
+      for (const el of document.querySelectorAll<HTMLElement>("[data-event-end]")) {
+        if (isPastDate(el.dataset.eventEnd, today)) el.textContent = el.dataset.pastLabel ?? el.textContent;
+      }
     </script>
   </body>
 </html>
