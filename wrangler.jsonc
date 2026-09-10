@@ -2,16 +2,16 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "stage4th-website",
   "compatibility_date": "2026-05-02",
-  "observability": {
-    "enabled": true
-  },
-  "main": "dist/_worker.js/index.js",
   "compatibility_flags": [
     "global_fetch_strictly_public",
     "nodejs_compat"
   ],
-  "assets": {
-    "binding": "ASSETS",
-    "directory": "dist"
+  // The adapter owns the worker entry and the assets binding now; it used to
+  // be `dist/_worker.js/index.js` plus an explicit `assets` block, which the
+  // Cloudflare vite plugin rejects because it validates the config before the
+  // build has produced that file.
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "observability": {
+    "enabled": true
   }
 }

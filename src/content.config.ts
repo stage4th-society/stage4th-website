@@ -1,7 +1,9 @@
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { glob } from "astro/loaders";
+import { z } from "astro/zod";
 
 const events = defineCollection({
-  type: "content",
+  loader: glob({ pattern: "**/*.md", base: "./src/content/events" }),
   schema: z.object({
     status: z.enum(["upcoming", "active", "past", "cancelled"]),
     category: z.enum(["full-production", "script-reading", "staged-reading", "acting-workshop", "meetup"]),
