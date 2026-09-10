@@ -27,6 +27,10 @@ const events = defineCollection({
       address: z.string(),
       city: z.string(),
     }),
+    // House rule: every show carries English subtitles unless the play is
+    // originally in English. Say so here — the detail page renders this
+    // verbatim, and leaving subtitles out has twice contradicted the
+    // homepage copy.
     language: z.object({
       zh: z.string(),
       en: z.string(),

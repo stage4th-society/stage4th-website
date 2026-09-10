@@ -78,7 +78,7 @@ const categories = lang === "zh" ? cnCategories : enCategories;
                   <span class="num">[{String(i + 1).padStart(2, "0")}]</span>
                   <span class="title"><em>{title}</em></span>
                   <span class="meta">{ev.data.dateTime}</span>
-                  <span class="status">{t.upcoming}</span>
+                  <span class="status">{ev.data.status === "active" ? t.active : t.upcoming}</span>
                   <span class="arr">→</span>
                 </a>
               </li>
