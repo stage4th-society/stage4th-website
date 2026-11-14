@@ -8,7 +8,7 @@ export default defineConfig({
   integrations: [sitemap()],
   // Nothing on this site keeps per-visitor state, and leaving this on makes
   // the adapter provision a KV namespace on every deploy.
-  session: false,
+  session: {},
   // Every image is a static file under public/, so the adapter's default
   // Cloudflare Images binding would bill for transforms nothing asks for.
   adapter: cloudflare({ imageService: "passthrough" }),
