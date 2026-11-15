@@ -15,11 +15,15 @@ npm run dev
 npm run build
 ```
 
-## Cloudflare Pages
+## Deployment (Cloudflare Workers)
 
-- Build command: `npm run build`
-- Output directory: `dist`
-- Environment: Node.js 20 or later
+The site runs on Cloudflare Workers through the `@astrojs/cloudflare` adapter. Worker settings live in `wrangler.jsonc`.
+
+- Production URL: https://stage4theatre.com
+- The GitHub repository is connected to Cloudflare, so pushing to `main` deploys the site.
+- Manual deploy: `npm run deploy` (builds, then runs `wrangler deploy`).
+- Local preview of the Workers build: `npm run preview`.
+- Environment: Node.js 22 or later (required by Wrangler).
 
 ## Content Updates
 
@@ -27,4 +31,9 @@ npm run build
 - Shared site copy and contact links live in `src/data/site.ts`.
 - Static images and PDFs live in `public/assets`.
 
-The MVP does not use a CMS, forms, or user-data collection.
+There is no CMS: content is edited in these files and published through git.
+
+The site does collect some visitor data:
+
+- The contact page form posts to Formspree (`src/pages/[lang]/contact.astro`).
+- Google Analytics (GA4) loads on every page (`src/layouts/BaseLayout.astro`).

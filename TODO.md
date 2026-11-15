@@ -5,7 +5,7 @@
 - [x] Confirm primary audience: general audience first; funders and theatre collaborators second.
 - [x] Confirm MVP maintenance model: Markdown first, CMS later.
 - [x] Confirm initial deployment model: free Cloudflare Pages subdomain first.
-- [x] Confirm no forms or user data collection for MVP.
+- [x] Confirm no forms or user data collection for MVP. (Superseded: the contact page now has a Formspree form, and the site loads Google Analytics.)
 - [x] Decide initial site language behavior:
   - Recommended: `/en` and `/zh` routes.
   - Recommended: browser-language redirect on first visit, plus manual language switch.
@@ -92,7 +92,8 @@
   - Social link group
   - QR code block
   - Image/media block
-- [ ] Add favicon and social preview image.
+- [x] Add social preview image (`public/assets/og-default.jpg`).
+- [ ] Add favicon. (`BaseLayout.astro` links the logo as an icon, but an empty `data:,` icon right after it may override it.)
 
 ## 4. Event Content Model
 
@@ -125,7 +126,7 @@
   - `Active`
   - `Past`
   - `Cancelled`
-- [ ] Add event filtering or section grouping if needed.
+- [x] Add event filtering or section grouping if needed. (Events page splits upcoming and past, and groups past events by category.)
 
 ## 5. SEO And Sharing
 
@@ -156,13 +157,13 @@
 
 ## 7. Deployment
 
-- [ ] Create GitHub repository.
-- [ ] Create or choose GitHub organization later.
-- [ ] Push initial Astro project.
-- [ ] Connect repository to Cloudflare Pages.
-- [ ] Configure build command and output directory.
-- [ ] Deploy to free Cloudflare Pages URL.
-- [ ] Add Cloudflare Web Analytics.
+- [x] Create GitHub repository.
+- [x] Create or choose GitHub organization later. (`stage4th-society`)
+- [x] Push initial Astro project.
+- [x] Connect repository to Cloudflare. (Cloudflare Workers, not Pages.)
+- [x] Configure the Workers build (`wrangler.jsonc` and the `@astrojs/cloudflare` adapter).
+- [x] Deploy to the free `workers.dev` URL.
+- [ ] Add Cloudflare Web Analytics. (Not done. The site uses Google Analytics (GA4) instead.)
 - [x] Document deployment steps in `README.md`.
 
 ## 8. QA Checklist
@@ -200,7 +201,7 @@
 - [ ] Add newsletter or interest form.
 - [ ] Add Decap CMS when non-technical editors need access.
 - [ ] Add Cloudinary if media library becomes large.
-- [ ] Buy and connect official domain.
+- [x] Buy and connect official domain. (stage4theatre.com)
 - [ ] Improve or redesign logo system if needed.
 
 ## 10. Immediate Next Steps
