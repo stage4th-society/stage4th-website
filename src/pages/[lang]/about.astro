@@ -1,6 +1,4 @@
 ---
-import { getCollection } from "astro:content";
-import { upcomingEvent } from "../../data/events";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { copy, languages, siteHero, siteAbout, site, type Lang } from "../../data/site";
 
@@ -13,7 +11,6 @@ const t = copy[lang];
 const about = siteAbout[lang];
 const paragraphs = t.aboutBody.split("\n\n");
 const hero = siteHero[lang];
-const upcoming = upcomingEvent(await getCollection("events"));
 ---
 <BaseLayout lang={lang} title={`${t.aboutTitle} | ${site.brand[lang].primary}`} description={paragraphs[0]}>
 
@@ -28,14 +25,11 @@ const upcoming = upcomingEvent(await getCollection("events"));
         <div class="copy">
           {paragraphs.map((p) => <p>{p}</p>)}
         </div>
-        <div class="upcoming-image">
-           {upcoming && (
-             <img
-               src={upcoming.data.posterImage}
-               alt={lang === "zh" ? upcoming.data.titleZh : upcoming.data.titleEn}
-             />
-           )}
-           <img src={site.past} alt="past event" />
+        <div class="about-logo">
+          <img
+            src="/assets/og-default.jpg"
+            alt={lang === "zh" ? "Stage 4th Society" : "Stage 4th Society"}
+          />
         </div>
       </div>
       <div class="pillars">
@@ -91,8 +85,18 @@ const upcoming = upcomingEvent(await getCollection("events"));
   .pull { font-family: var(--serif); font-size: clamp(28px, 3.2vw, 48px); line-height: 1.2; font-style: italic; max-width: 1000px; padding-bottom: 64px; border-bottom: 1px solid var(--line); }
   .body-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; padding: 80px 0; align-items: start; }
   .copy p { font-size: 16px; line-height: 1.75; color: var(--ink-soft); margin-bottom: 18px; }
-  .upcoming-image { display: flex; gap: 12px; margin-left: 30px; }
-  .upcoming-image img { width: calc(50% - 6px); aspect-ratio: 3 / 4; object-fit: cover; }
+  .about-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .about-logo img {
+    display: block;
+    width: min(100%, 360px);
+    height: auto;
+    object-fit: contain;
+  }
   
   .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; padding: 56px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
   .pillars article { display: flex; flex-direction: column; gap: 12px; }

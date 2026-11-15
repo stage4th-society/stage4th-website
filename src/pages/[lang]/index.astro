@@ -18,10 +18,38 @@ const about = siteAbout[lang];
 const u = siteUpcoming[lang];
 const events = await getCollection("events");
 
+const categoryLabels = {
+  en: {
+    "full-production": "Full Production",
+    "black-box": "Black Box",
+    "staged-reading": "Staged Reading",
+    "script-reading": "Script Reading",
+    "acting-workshop": "Acting Workshop",
+    "meetup": "Meetup",
+  },
+  zh: {
+    "full-production": "正式制作",
+    "black-box": "黑箱剧场",
+    "staged-reading": "剧本朗读",
+    "script-reading": "舞台围读",
+    "acting-workshop": "表演工作坊",
+    "meetup": "交流活动",
+  },
+} as const;
+
+const pastEvents = events
+  .filter((event) => event.data.status === "past")
+  .sort(
+    (a, b) =>
+      Date.parse(b.data.startDate) - Date.parse(a.data.startDate)
+  );
+
 // Everything this block shows comes from the featured event's markdown, so
 // announcing a new show is a one-file change.
 const upcoming = upcomingEvent(events);
-
+const upcomingCategory = upcoming
+  ? categoryLabels[lang][upcoming.data.category]
+  : "";
 const upcomingTitle = upcoming && (lang === "zh" ? upcoming.data.titleZh : upcoming.data.titleEn);
 const excerpt = upcoming && (lang === "zh" ? upcoming.data.homeExcerptZh : upcoming.data.homeExcerptEn);
 // Filtered here so a visitor with no JavaScript still sees a truthful list;
@@ -39,7 +67,7 @@ const title = `${site.brand[lang].primary}`;
       <div class="wrap">
         <div class="head">
           <span class="eyebrow">{u.eyebrow}</span>
-          <h2 class="display">{u.heading}</h2>
+          <h2 class="display">{upcomingCategory}</h2>
         </div>
 
         <div class="grid">
@@ -98,7 +126,7 @@ const title = `${site.brand[lang].primary}`;
       </div>
 
       <div class="poster-carousel">
-        {events.map((event) => (
+        {pastEvents.map((event) => (
           <a
             class="archive-poster"
             href={`/${lang}/events/${eventSlug(event)}`}
@@ -150,7 +178,14 @@ const title = `${site.brand[lang].primary}`;
   .upcoming { padding: 40px 0; border-bottom: 1px solid var(--line); }
   .upcoming .head { display: flex; flex-direction: column; gap: 24px; margin-bottom: 32px; }
   .upcoming h2 em { font-family: "Inter", sans-serif; font-size: clamp(28px, 4vw, 36px); font-style: normal; line-height: 1.15; }
-  .upcoming-image { aspect-ratio: 3 / 4; max-height: 800px; width: 100%; overflow: hidden; background: var(--paper-soft); }
+  .upcoming-image { 
+    aspect-ratio: 3 / 4; 
+    max-height: 800px; 
+    width: 100%; 
+    overflow: hidden; 
+    background: var(--paper-soft); 
+    border: 0.5px solid var(--ink);
+  }
   .upcoming-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .upcoming-text { display: flex; flex-direction: column; gap: 32px; max-width: 600px; margin-top: -20px; }
   .upcoming-text p { font-size: 16px; line-height: 1.8; color: var(--ink-soft); }

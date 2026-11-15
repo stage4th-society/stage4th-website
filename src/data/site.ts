@@ -219,6 +219,7 @@ export const siteEvents = {
     sectionUpcoming: "Upcoming",
     sections: {
       fullProduction: "Full Production",
+      blackBox: "Black Box Theatre",
       stagedReading: "Staged Reading",
       scriptReading: "Script Reading",
       actingWorkshop: "Acting Workshop",
@@ -234,6 +235,7 @@ export const siteEvents = {
     sectionUpcoming: "即将到来",
     sections: {
       fullProduction: "正式制作",
+      blackBox: "黑箱剧场",
       stagedReading: "剧本围读",
       scriptReading: "剧本朗读",
       actingWorkshop: "表演工作坊",

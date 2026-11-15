@@ -6,11 +6,20 @@ const events = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/events" }),
   schema: z.object({
     status: z.enum(["upcoming", "active", "past", "cancelled"]),
-    category: z.enum(["full-production", "script-reading", "staged-reading", "acting-workshop", "meetup"]),
+    category: z.enum(["full-production", "black-box", "script-reading", "staged-reading", "acting-workshop", "meetup"]),
     titleZh: z.string(),
     titleEn: z.string(),
     subtitleZh: z.string(),
     subtitleEn: z.string(),
+    secondaryTitles: z
+      .array(
+        z.object({
+          zh: z.string().min(1),
+          en: z.string().min(1),
+          videoUrl: z.string().url().optional(),
+        }),
+      )
+      .default([]),   
     dateTime: z.string(),
     // ISO 8601. Date-only is fine for a multi-performance run; a full
     // datetime is used where the copy states one unambiguous curtain time.
